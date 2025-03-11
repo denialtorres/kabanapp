@@ -1,3 +1,7 @@
+# Main Schema
+![image](https://github.com/user-attachments/assets/13a891cd-d9f6-470b-bb57-7b5076a49946)
+
+
 # AUTH API
 | Route Name           | Method | Path                     | Controller#Action            |
 |----------------------|--------|--------------------------|------------------------------|
