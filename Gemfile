@@ -17,6 +17,9 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# cors middleware
+gem "rack-cors"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -49,6 +52,12 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # debuggin
+  gem "pry"
+
+  # for mock data
+  gem "factory_bot"
 end
 
 group :development do
@@ -63,3 +72,6 @@ group :test do
 end
 
 gem "rspec-rails", "~> 7.1", :groups => [:development, :test]
+
+gem "devise", "~> 4.9"
+gem "devise-api", "~> 0.2.0"
