@@ -55,6 +55,10 @@ group :development, :test do
 
   # debuggin
   gem "pry"
+
+  # for api documentation
+  gem "rswag-api"
+  gem "rswag-ui"
 end
 
 group :development do
@@ -69,6 +73,7 @@ group :test do
   gem "shoulda-matchers", "~> 6.0"
   # for mock data
   gem "factory_bot"
+  gem "rswag-specs"
 end
 
 gem "rspec-rails", "~> 7.1", groups: [ :development, :test ]

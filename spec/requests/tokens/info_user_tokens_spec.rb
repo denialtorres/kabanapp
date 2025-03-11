@@ -1,54 +1,46 @@
 require 'rails_helper'
+require 'swagger_helper'
 
 RSpec.describe 'Info Token', type: :request do
-  let(:user) { create(:user) }
-  let(:devise_api_token) { create(:devise_api_token, resource_owner: user) }
+  path "/users/tokens/info" do
+    get "Retrieves the authenticated user's information" do
+      tags "Authentication"
+      consumes "application/json"
+      produces "application/json"
 
-  def authentication_headers_for(resource_owner, token = nil, token_type = :access_token)
-    token = FactoryBot.create(:devise_api_token, resource_owner: resource_owner) if token.blank?
-    token_value = token.send(token_type)
+      parameter name: :Authorization, in: :header, type: :string, required: true, description: "Bearer token"
 
-    { 'Authorization': "Bearer #{token_value}" }
-  end
+      response "200", "Valid token - returns user info" do
+        let(:user) { create(:user) }
+        let(:devise_api_token) { create(:devise_api_token, resource_owner: user) }
+        let(:Authorization) { "Bearer #{devise_api_token.access_token}" }
 
-  context 'when the token is valid and on the header' do
-    before do
-      get "/users/tokens/info", headers: authentication_headers_for(user, devise_api_token), as: :json
-    end
+        run_test! do
+          expect(response).to have_http_status(:success)
+          body = JSON.parse(response.body)
+          expect(body["id"]).to eq(user.id)
+          expect(body["email"]).to eq(user.email)
+          expect(body["created_at"].to_date).to eq(user.created_at.to_date)
+          expect(body["updated_at"].to_date).to eq(user.updated_at.to_date)
+        end
+      end
 
-    it "return http success" do
-      expect(response).to have_http_status(:success)
-    end
+      response "401", "Invalid token - unauthorized" do
+        let(:user) { create(:user) }
+        let(:devise_api_token) { build(:devise_api_token, resource_owner: user) }
+        let(:Authorization) { "Bearer #{devise_api_token.access_token}" }
 
-    it "returns the authenticated resource owner" do
-      expect(JSON.parse(response.body)["id"]).to eq(user.id)
-      expect(JSON.parse(response.body)["email"]).to eq(user.email)
-      expect(JSON.parse(response.body)["created_at"].to_date).to eq user.created_at.to_date
-      expect(JSON.parse(response.body)["updated_at"].to_date).to eq user.updated_at.to_date
-    end
-  end
-
-  context 'when the token is invalid and on the header' do
-    let(:devise_api_token) { build(:devise_api_token, resource_owner: user) }
-
-    before do
-      get "/users/tokens/info", headers: authentication_headers_for(user, devise_api_token), as: :json
-    end
-
-    it 'returns http unauthorized' do
-      expect(response).to have_http_status(:unauthorized)
-    end
-
-    it 'returns an error response' do
-      expect(JSON.parse(response.body)["error"]).to eq 'invalid_token'
-      expect(JSON.parse(response.body)["error_description"]).to eq([ "Invalid token" ])
-    end
-
-    it 'does not return the authenticated resource owner' do
-      expect(JSON.parse(response.body)["id"]).to be_nil
-      expect(JSON.parse(response.body)["email"]).to be_nil
-      expect(JSON.parse(response.body)["created_at"]).to be_nil
-      expect(JSON.parse(response.body)["updated_at"]).to be_nil
+        run_test! do
+          expect(response).to have_http_status(:unauthorized)
+          body = JSON.parse(response.body)
+          expect(body["error"]).to eq("invalid_token")
+          expect(body["error_description"]).to eq(["Invalid token"])
+          expect(body["id"]).to be_nil
+          expect(body["email"]).to be_nil
+          expect(body["created_at"]).to be_nil
+          expect(body["updated_at"]).to be_nil
+        end
+      end
     end
   end
 end

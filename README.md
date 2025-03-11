@@ -7,6 +7,10 @@
 | sign_in_user_tokens | POST   | /users/tokens/sign_in    | devise/api/tokens#sign_in    |
 | info_user_tokens  | GET    | /users/tokens/info       | devise/api/tokens#info       |
 
+# Documentation
+```
+http://localhost:3000/api-docs/
+```
 
 # README
 

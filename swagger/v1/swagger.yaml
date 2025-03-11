@@ -1,0 +1,90 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  "/users/tokens/info":
+    get:
+      security:
+        - bearerAuth: []
+      summary: Retrieves the authenticated user's information
+      tags:
+        - Authentication
+      responses:
+        '200':
+          description: Valid token - returns user info
+        '401':
+          description: Invalid token - unauthorized
+  "/users/tokens/sign_in":
+    post:
+      summary: Authenticates an existing user and returns tokens
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: User authenticated successfully
+        '401':
+          description: Invalid credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: test@example.com
+                password:
+                  type: string
+                  format: password
+                  example: password123
+              required:
+              - email
+              - password
+  "/users/tokens/sign_up":
+    post:
+      summary: Registers a new user and returns authentication tokens
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '201':
+          description: User created successfully
+        '422':
+          description: Validation errors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: test@example.com
+                password:
+                  type: string
+                  format: password
+                  example: password123
+                password_confirmation:
+                  type: string
+                  format: password
+                  example: password123
+              required:
+              - email
+              - password
+              - password_confirmation
+servers:
+  - url: http://{defaultHost}
+    variables:
+      defaultHost:
+        default: localhost:3000

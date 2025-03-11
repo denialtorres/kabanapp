@@ -1,57 +1,43 @@
 require 'rails_helper'
+require 'swagger_helper'
 
 RSpec.describe 'User Token Sign In', type: :request do
-  let!(:user) { create(:user) }
-  let(:good_password) { "password123" }
-  let(:url) { '/users/tokens/sign_in' }
+  path "/users/tokens/sign_in" do
+    post "Authenticates an existing user and returns tokens" do
+      tags "Authentication"
+      consumes "application/json"
+      produces "application/json"
 
-  let(:valid_params) do
-    {
-      email: user.email,
-      password: good_password
-    }
-  end
-
-  let(:invalid_params) do
-    {
-      user: {
-        email: user.email,
-        password: 'wrong_password'
+      parameter name: :user_params, in: :body, schema: {
+        type: :object,
+        properties: {
+          email: { type: :string, format: :email, example: "test@example.com" },
+          password: { type: :string, format: :password, example: "password123" }
+        },
+        required: ["email", "password"]
       }
-    }
-  end
 
-  describe 'POST /users/tokens/sign_in' do
-    context 'with valid credentials' do
-      before { post url, params: valid_params }
+      response "200", "User authenticated successfully" do
+        let!(:user) { create(:user, password: "password123") }
+        let(:user_params) { { email: user.email, password: "password123" } }
 
-      it 'returns http ok' do
-        expect(response).to have_http_status(:ok)
+        run_test! do
+          expect(response).to have_http_status(:ok)
+          body = JSON.parse(response.body)
+          expect(body["resource_owner"]["email"]).to eq(user.email)
+          expect(body["token"]).to be_present
+          expect(body["token_type"]).to eq("Bearer")
+        end
       end
 
-      it 'returns the user email' do
-        expect(JSON.parse(response.body)["resource_owner"]["email"]).to eq(user.email)
-      end
+      response "401", "Invalid credentials" do
+        let!(:user) { create(:user, password: "password123") }
+        let(:user_params) { { email: user.email, password: "wrong_password" } }
 
-      it 'returns an access-token' do
-        expect(JSON.parse(response.body)["token"]).to be_present
-      end
-
-      it 'returns a token-type' do
-        expect(JSON.parse(response.body)['token_type']).to be_present
-        expect(JSON.parse(response.body)['token_type']).to eq('Bearer')
-      end
-    end
-
-    context 'when invalid params are sent' do
-      before { post url, params: invalid_params }
-
-      it 'returns http bad_request' do
-        expect(response).to have_http_status(:bad_request)
-      end
-
-      it 'returns error messages' do
-        expect(JSON.parse(response.body)['error']).to be_present
+        run_test! do
+          expect(response).to have_http_status(:unauthorized)
+          expect(JSON.parse(response.body)["error"]).to be_present
+        end
       end
     end
   end
