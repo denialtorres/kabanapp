@@ -3,7 +3,7 @@ FROM ruby:3.3.6
 ENV RAILS_ENV=development
 
 RUN apt update -qq && \
-  apt install -y --no-install-recommends build-essential libpq-dev curl && \
+  apt install -y --no-install-recommends build-essential libpq-dev curl graphviz && \
   curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
   apt install -y --no-install-recommends nodejs && \
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg -o /root/yarn-pubkey.gpg && \
