@@ -56,3 +56,13 @@ Reset the db
 ```
 docker-compose exec app bundle exec rails db:drop db:setup
 ```
+
+Shell
+```
+docker-compose exec app /bin/bash
+```
+
+Tests
+```
+docker-compose run -e "RAILS_ENV=test" app bundle exec rspec
+```

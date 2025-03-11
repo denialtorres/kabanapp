@@ -74,6 +74,8 @@ group :test do
   # for mock data
   gem "factory_bot"
   gem "rswag-specs"
+  # clear database after each test
+  gem 'database_cleaner-active_record'
 end
 
 gem "rspec-rails", "~> 7.1", groups: [ :development, :test ]
