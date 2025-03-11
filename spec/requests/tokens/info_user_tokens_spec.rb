@@ -4,7 +4,7 @@ RSpec.describe 'Info Token', type: :request do
   let(:user) { create(:user) }
   let(:devise_api_token) { create(:devise_api_token, resource_owner: user) }
 
-  def authentication_headers_for(resource_owner, token=nil, token_type= :access_token)
+  def authentication_headers_for(resource_owner, token = nil, token_type = :access_token)
     token = FactoryBot.create(:devise_api_token, resource_owner: resource_owner) if token.blank?
     token_value = token.send(token_type)
 
@@ -41,7 +41,7 @@ RSpec.describe 'Info Token', type: :request do
 
     it 'returns an error response' do
       expect(JSON.parse(response.body)["error"]).to eq 'invalid_token'
-      expect(JSON.parse(response.body)["error_description"]).to eq(["Invalid token"])
+      expect(JSON.parse(response.body)["error_description"]).to eq([ "Invalid token" ])
     end
 
     it 'does not return the authenticated resource owner' do

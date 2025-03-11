@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'User Token Sign In', type: :request do
   let!(:user) { create(:user) }
   let(:good_password) { "password123" }
-  let(:url) {'/users/tokens/sign_in'}
+  let(:url) { '/users/tokens/sign_in' }
 
   let(:valid_params) do
     {

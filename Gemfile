@@ -66,12 +66,12 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'shoulda-matchers', '~> 6.0'
+  gem "shoulda-matchers", "~> 6.0"
   # for mock data
   gem "factory_bot"
 end
 
-gem "rspec-rails", "~> 7.1", :groups => [:development, :test]
+gem "rspec-rails", "~> 7.1", groups: [ :development, :test ]
 
 gem "devise", "~> 4.9"
 gem "devise-api", "~> 0.2.0"
