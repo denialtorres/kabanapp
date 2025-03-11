@@ -16,7 +16,7 @@ RSpec.describe Card, type: :model do
       card1 = create(:card, column: column, position: 2)
       card2 = create(:card, column: column, position: 1)
 
-      expect(column.cards.pluck(:id)).to eq([card2.id, card1.id])
+      expect(column.cards.pluck(:id)).to eq([ card2.id, card1.id ])
     end
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe Column, type: :model do
       column1 = create(:column, board: board, position: 2)
       column2 = create(:column, board: board, position: 1)
 
-      expect(board.columns.pluck(:id)).to eq([column2.id, column1.id])
+      expect(board.columns.pluck(:id)).to eq([ column2.id, column1.id ])
     end
   end
 end

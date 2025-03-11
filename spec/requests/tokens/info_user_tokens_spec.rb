@@ -34,7 +34,7 @@ RSpec.describe 'Info Token', type: :request do
           expect(response).to have_http_status(:unauthorized)
           body = JSON.parse(response.body)
           expect(body["error"]).to eq("invalid_token")
-          expect(body["error_description"]).to eq(["Invalid token"])
+          expect(body["error_description"]).to eq([ "Invalid token" ])
           expect(body["id"]).to be_nil
           expect(body["email"]).to be_nil
           expect(body["created_at"]).to be_nil

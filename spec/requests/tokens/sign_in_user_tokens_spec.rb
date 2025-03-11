@@ -14,7 +14,7 @@ RSpec.describe 'User Token Sign In', type: :request do
           email: { type: :string, format: :email, example: "test@example.com" },
           password: { type: :string, format: :password, example: "password123" }
         },
-        required: ["email", "password"]
+        required: [ "email", "password" ]
       }
 
       response "200", "User authenticated successfully" do
