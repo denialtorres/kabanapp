@@ -55,9 +55,6 @@ group :development, :test do
 
   # debuggin
   gem "pry"
-
-  # for mock data
-  gem "factory_bot"
 end
 
 group :development do
@@ -69,6 +66,9 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem 'shoulda-matchers', '~> 6.0'
+  # for mock data
+  gem "factory_bot"
 end
 
 gem "rspec-rails", "~> 7.1", :groups => [:development, :test]
