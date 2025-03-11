@@ -1,24 +1,68 @@
-# README
+# AUTH API
+| Route Name           | Method | Path                     | Controller#Action            |
+|----------------------|--------|--------------------------|------------------------------|
+| revoke_user_tokens  | POST   | /users/tokens/revoke/    | devise/api/tokens#revoke     |
+| refresh_user_tokens | POST   | /users/tokens/refresh/   | devise/api/tokens#refresh    |
+| sign_up_user_tokens | POST   | /users/tokens/sign_up    | devise/api/tokens#sign_up    |
+| sign_in_user_tokens | POST   | /users/tokens/sign_in    | devise/api/tokens#sign_in    |
+| info_user_tokens  | GET    | /users/tokens/info       | devise/api/tokens#info       |
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Documentation
+```
+http://localhost:3000/api-docs/
+```
 
-Things you may want to cover:
+## Docker
 
-* Ruby version
+To mount the project
+inside the main foler:
 
-* System dependencies
+```
+docker-compose up --build
+```
 
-* Configuration
+For run the migrations
 
-* Database creation
+```
+docker-compose exec app rails db:migrate
+```
 
-* Database initialization
+Run the seed files
 
-* How to run the test suite
+```
+docker-compose exec app rails db:seed
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+To connect to the rails console
 
-* Deployment instructions
+```
+docker-compose exec app rails c
+```
 
-* ...
+Run the server
+
+```
+docker-compose exec app rails server -b 0.0.0.0
+```
+
+Run Sidekiq
+
+```
+docker-compose exec app bundle exec sidekiq
+```
+
+Reset the db
+
+```
+docker-compose exec app bundle exec rails db:drop db:setup
+```
+
+Shell
+```
+docker-compose exec app /bin/bash
+```
+
+Tests
+```
+docker-compose run -e "RAILS_ENV=test" app bundle exec rspec
+```
