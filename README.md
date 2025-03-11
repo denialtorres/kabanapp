@@ -12,27 +12,47 @@
 http://localhost:3000/api-docs/
 ```
 
-# README
+## Docker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To mount the project
+inside the main foler:
 
-Things you may want to cover:
+```
+docker-compose up --build
+```
 
-* Ruby version
+For run the migrations
 
-* System dependencies
+```
+docker-compose exec app rails db:migrate
+```
 
-* Configuration
+Run the seed files
 
-* Database creation
+```
+docker-compose exec app rails db:seed
+```
 
-* Database initialization
+To connect to the rails console
 
-* How to run the test suite
+```
+docker-compose exec app rails c
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Run the server
 
-* Deployment instructions
+```
+docker-compose exec app rails server -b 0.0.0.0
+```
 
-* ...
+Run Sidekiq
+
+```
+docker-compose exec app bundle exec sidekiq
+```
+
+Reset the db
+
+```
+docker-compose exec app bundle exec rails db:drop db:setup
+```
