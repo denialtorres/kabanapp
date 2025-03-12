@@ -93,6 +93,44 @@ paths:
       responses:
         "200":
           description: A list of boards for the authenticated user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "3"
+                        type:
+                          type: string
+                          example: "board"
+                        attributes:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 3
+                            user_id:
+                              type: integer
+                              example: 6
+                            name:
+                              type: string
+                              example: "Board Name"
+                            created_at:
+                              type: string
+                              format: date-time
+                              example: "2025-03-12T02:43:57.929Z"
+                            updated_at:
+                              type: string
+                              format: date-time
+                              example: "2025-03-12T02:43:57.929Z"
+        '401':
+          description: Invalid token - unauthorized
 servers:
   - url: http://{defaultHost}
     variables:
