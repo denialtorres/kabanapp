@@ -391,6 +391,40 @@ paths:
                   error:
                     type: string
                     example: Board not found
+  "/api/v1/boards/{board_id}/cards":
+      post:
+        summary: Generates a new card for the board
+        tags:
+        - Cards
+        security:
+          - bearerAuth: []
+        parameters:
+        - name: board_id
+          in: path
+          required: true
+          description: Board ID
+          schema:
+            type: string
+        responses:
+          '201':
+            description: Card Created
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  column_position:
+                    type: integer
+                require:
+                - name
+                - description
+          required: true
+          description: Card main data
 servers:
   - url: http://{defaultHost}
     variables:

@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   # main kaban endpoints
   namespace :api do
     namespace :v1 do
-      resources :boards
+      resources :boards do
+        resources :cards, only: [ :create ]
+      end
     end
   end
 
