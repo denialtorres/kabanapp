@@ -18,7 +18,7 @@ RSpec.describe "PUT /api/v1/boards/:id", type: :request do
         properties: {
           name: { type: :string }
         },
-        required: ["name"]
+        required: [ "name" ]
       }
 
       before(:each) do
@@ -57,7 +57,7 @@ RSpec.describe "PUT /api/v1/boards/:id", type: :request do
         run_test! do
           expect(response).to have_http_status(:unprocessable_entity)
           body = JSON.parse(response.body)
-          expect(body["error"]["name"]).to eq(["can't be blank"])
+          expect(body["error"]["name"]).to eq([ "can't be blank" ])
         end
       end
     end

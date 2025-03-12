@@ -70,3 +70,8 @@ Tests
 ```
 docker-compose run -e "RAILS_ENV=test" app bundle exec rspec
 ```
+
+Rubocop
+```
+./bin/rubocop -a
+```

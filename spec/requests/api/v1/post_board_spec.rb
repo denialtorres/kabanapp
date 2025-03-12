@@ -14,7 +14,7 @@ RSpec.describe "POST /api/v1/boards", type: :request do
         properties: {
           name: { type: :string }
         },
-        required: ["name"]
+        required: [ "name" ]
       }
 
       response "201", "Board created" do
@@ -52,7 +52,7 @@ RSpec.describe "POST /api/v1/boards", type: :request do
         run_test! do
           expect(response).to have_http_status(:unprocessable_entity)
           body = JSON.parse(response.body)
-          expect(body["error"]["name"]).to eq(["can't be blank"])
+          expect(body["error"]["name"]).to eq([ "can't be blank" ])
         end
       end
     end
