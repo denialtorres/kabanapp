@@ -275,6 +275,85 @@ paths:
                   error:
                     type: string
                     example: "Board not found"
+    put:
+      summary: Updates an authenticated user's board
+      tags:
+        - Boards
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the board to retrieve
+      operationId: updaetBoard
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        description: Board main data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                board:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the board
+                  required:
+                    - name
+      responses:
+        '200':
+          description: Board updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+        '401':
+          description: Invalid or expired token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '422':
+          description: Invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        items:
+                          type: string
+                        example: ["can't be blank"]
 servers:
   - url: http://{defaultHost}
     variables:

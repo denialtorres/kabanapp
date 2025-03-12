@@ -6,7 +6,7 @@ module Api
       skip_before_action :verify_authenticity_token, railse: false
       before_action :authenticate_devise_api_token!
       before_action :set_current_user
-      before_action :set_board, only: [:show]
+      before_action :set_board, only: [:show, :update]
 
       # GET /api/v1/boards
       def index
@@ -27,6 +27,15 @@ module Api
           render json: BoardSerializer.new(board).serializable_hash.to_json, status: :created
         else
           render json: { error: board.errors.messages }, status: :unprocessable_entity
+        end
+      end
+
+      # PUT /api/v1/boards/:id
+      def update
+        if @board.update(board_params)
+          render json: BoardSerializer.new(@board).serializable_hash.to_json, status: :ok
+        else
+          render json:{ error: @board.errors.messages }, status: :unprocessable_entity
         end
       end
 
