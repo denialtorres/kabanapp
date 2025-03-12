@@ -354,6 +354,43 @@ paths:
                         items:
                           type: string
                         example: ["can't be blank"]
+    delete:
+      summary: "Deletes an existing board"
+      tags:
+        - Boards
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the board to retrieve
+      operationId: deleteBoard
+      responses:
+        '204':
+          description: Board successfully deleted
+        '401':
+          description: Unauthorized (Invalid or expired token)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '404':
+          description: Board not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Board not found
 servers:
   - url: http://{defaultHost}
     variables:
