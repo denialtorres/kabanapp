@@ -83,6 +83,348 @@ paths:
               - email
               - password
               - password_confirmation
+  "/api/v1/boards":
+    get:
+      summary: Get a list of the boards/projects created by an user
+      tags:
+        - Boards
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: A list of boards for the authenticated user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "3"
+                        type:
+                          type: string
+                          example: "board"
+                        attributes:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 3
+                            user_id:
+                              type: integer
+                              example: 6
+                            name:
+                              type: string
+                              example: "Board Name"
+                            created_at:
+                              type: string
+                              format: date-time
+                              example: "2025-03-12T02:43:57.929Z"
+                            updated_at:
+                              type: string
+                              format: date-time
+                              example: "2025-03-12T02:43:57.929Z"
+        '401':
+          description: Invalid token - unauthorized
+    post:
+      summary: Generates a new authenticated user's board
+      tags:
+        - Boards
+      security:
+        - bearerAuth: []
+      operationId: createBoard
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        description: Board main data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                board:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the board
+                  required:
+                    - name
+      responses:
+        '201':
+          description: Board created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+        '401':
+          description: Invalid or expired token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '422':
+          description: Invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        items:
+                          type: string
+                        example: ["can't be blank"]
+  "/api/v1/boards/{id}":
+    get:
+      summary: Retrieve a specific board by ID
+      description: Returns the details of a specific board belonging to the authenticated user.
+      tags:
+        - Boards
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the board to retrieve
+      responses:
+        "200":
+          description: Successfully retrieved the board
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "3"
+                      type:
+                        type: string
+                        example: "board"
+                      attributes:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 3
+                          user_id:
+                            type: integer
+                            example: 6
+                          name:
+                            type: string
+                            example: "Board Name"
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: "2025-03-12T02:59:36.029Z"
+                          updated_at:
+                            type: string
+                            format: date-time
+                            example: "2025-03-12T02:59:36.029Z"
+        "401":
+          description: Invalid token - unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid token"
+        "404":
+          description: Board not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Board not found"
+    put:
+      summary: Updates an authenticated user's board
+      tags:
+        - Boards
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the board to retrieve
+      operationId: updaetBoard
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        description: Board main data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                board:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the board
+                  required:
+                    - name
+      responses:
+        '200':
+          description: Board updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+        '401':
+          description: Invalid or expired token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '422':
+          description: Invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        items:
+                          type: string
+                        example: ["can't be blank"]
+    delete:
+      summary: "Deletes an existing board"
+      tags:
+        - Boards
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the board to retrieve
+      operationId: deleteBoard
+      responses:
+        '204':
+          description: Board successfully deleted
+        '401':
+          description: Unauthorized (Invalid or expired token)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '404':
+          description: Board not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Board not found
+  "/api/v1/boards/{board_id}/cards":
+      post:
+        summary: Generates a new card for the board
+        tags:
+        - Cards
+        security:
+          - bearerAuth: []
+        parameters:
+        - name: board_id
+          in: path
+          required: true
+          description: Board ID
+          schema:
+            type: string
+        responses:
+          '201':
+            description: Card Created
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  column_position:
+                    type: integer
+                require:
+                - name
+                - description
+          required: true
+          description: Card main data
 servers:
   - url: http://{defaultHost}
     variables:

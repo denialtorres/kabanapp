@@ -84,3 +84,6 @@ gem "rspec-rails", "~> 7.1", groups: [ :development, :test ]
 
 gem "devise", "~> 4.9"
 gem "devise-api", "~> 0.2.0"
+
+# serialize api response
+gem "jsonapi-serializer"

@@ -70,3 +70,14 @@ Tests
 ```
 docker-compose run -e "RAILS_ENV=test" app bundle exec rspec
 ```
+
+Rubocop
+```
+./bin/rubocop -a
+```
+
+Swagger
+inside the container
+```
+rails rswag:specs:swaggerize RAILS_ENV=test
+```
