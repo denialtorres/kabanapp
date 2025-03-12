@@ -425,6 +425,45 @@ paths:
                 - description
           required: true
           description: Card main data
+  "/api/v1/boards/{board_id}/cards/{id}":
+      put:
+        summary: Updates an existing card on the board
+        tags:
+        - Cards
+        security:
+          - bearerAuth: []
+        parameters:
+        - name: board_id
+          in: path
+          required: true
+          description: Board ID
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          description: Card ID
+          schema:
+            type: string
+        responses:
+          '200':
+            description: Card Updated
+          '404':
+            description: Card not found
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  column_position:
+                    type: integer
+          required: true
+          description: Updated card data
 servers:
   - url: http://{defaultHost}
     variables:

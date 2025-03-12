@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get "pages/home"
   get "pages/restricted"
   devise_for :users
-  root 'boards#index'
+  root "boards#index"
 
   resources :boards do
     # resources :columns do
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :boards do
-        resources :cards, only: [ :create ]
+        resources :cards, only: [ :create, :update ]
       end
     end
   end

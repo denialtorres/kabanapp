@@ -6,7 +6,8 @@ module Api
       skip_before_action :verify_authenticity_token, railse: false
       before_action :authenticate_devise_api_token!
       before_action :set_current_user
-      before_action :set_board, only: [ :create ]
+      before_action :set_board, only: [ :create, :update ]
+      before_action :set_card, only: [ :update ]
 
       # POST /api/v1/boards/:board_id/cards
       def create
@@ -14,6 +15,15 @@ module Api
 
         if @card.save
           render json: CardSerializer.new(@card).serializable_hash.to_json, status: :created
+        else
+          render json: @card.errors, status: :unprocessable_entity
+        end
+      end
+
+      # PUT /api/v1/boards/:board_id/cards/:id
+      def update
+        if @card.update(card_params)
+          render json: CardSerializer.new(@card).serializable_hash.to_json, status: :ok
         else
           render json: @card.errors, status: :unprocessable_entity
         end
@@ -35,6 +45,12 @@ module Api
         @board = current_user.boards.find(params[:board_id])
       rescue ActiveRecord::RecordNotFound
         render json: { error: "Board not found" }, status: :not_found
+      end
+
+      def set_card
+        @card = @board.cards.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: "Card not found" }, status: :not_found
       end
 
       def card_params

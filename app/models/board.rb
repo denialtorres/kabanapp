@@ -1,6 +1,7 @@
 class Board < ApplicationRecord
   belongs_to :user
   has_many :columns, dependent: :destroy
+  has_many :cards, through: :columns
 
   after_create :create_default_colums
 
