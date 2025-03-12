@@ -131,6 +131,78 @@ paths:
                               example: "2025-03-12T02:43:57.929Z"
         '401':
           description: Invalid token - unauthorized
+  "/api/v1/boards/{id}":
+    get:
+      summary: Retrieve a specific board by ID
+      description: Returns the details of a specific board belonging to the authenticated user.
+      tags:
+        - Boards
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the board to retrieve
+      responses:
+        "200":
+          description: Successfully retrieved the board
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "3"
+                      type:
+                        type: string
+                        example: "board"
+                      attributes:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 3
+                          user_id:
+                            type: integer
+                            example: 6
+                          name:
+                            type: string
+                            example: "Board Name"
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: "2025-03-12T02:59:36.029Z"
+                          updated_at:
+                            type: string
+                            format: date-time
+                            example: "2025-03-12T02:59:36.029Z"
+        "401":
+          description: Invalid token - unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid token"
+        "404":
+          description: Board not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Board not found"
 servers:
   - url: http://{defaultHost}
     variables:
