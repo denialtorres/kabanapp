@@ -1,0 +1,12 @@
+<%= turbo_frame_tag dom_id(card) do %>
+  <div class="card my-3 border-0 shadow-sm" data-kanban-board-target="card" data-board-id=<%= board.id %> data-column-id=<%= column.id %>  data-card-id=<%= card.id %>>
+      <div class="card-body">
+          <h5 class="card-title">
+              <%= card.name %>
+          </h5>
+          <p class="card-text">
+              <%= card.description %>
+          </p>
+      </div>
+  </div>
+<% end %>
