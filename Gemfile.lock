@@ -180,6 +180,8 @@ GEM
     json-schema (5.1.1)
       addressable (~> 2.8)
       bigdecimal (~> 3.1)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
     kamal (2.5.3)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -470,6 +472,7 @@ DEPENDENCIES
   factory_bot
   importmap-rails
   jbuilder
+  jsonapi-serializer
   kamal
   pg
   propshaft
