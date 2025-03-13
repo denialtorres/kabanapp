@@ -1,8 +1,8 @@
 module Api
   module V1
     class CardsController < BaseController
-      before_action :set_board, only: [ :create, :update ]
-      before_action :set_card, only: [ :update ]
+      before_action :set_board, only: [ :create, :update, :assign, :unassign ]
+      before_action :set_card, only: [ :update, :assign, :unassign ]
 
       # POST /api/v1/boards/:board_id/cards
       def create
@@ -29,6 +29,28 @@ module Api
         end
       end
 
+      # POST /api/v1/boards/:board_id/cards/:id/assign
+      def assign
+        assined_user = User.find(card_params[:user_id])
+
+        if @card.user_cards.create(user: assined_user, role: "user")
+          render json: CardSerializer.new(@card).serializable_hash.to_json, status: :ok
+        else
+          render json: @card.errors, status: :unprocessable_entity
+        end
+      end
+
+      # POST /api/v1/boards/:board_id/cards/:id/unassign
+      def unassign
+        assigned_card = @card.user_cards.where(user_id: card_params[:user_id])
+
+        if assigned_card.destroy_all
+          render json: CardSerializer.new(@card).serializable_hash.to_json, status: :ok
+        else
+          render json: @card.errors, status: :unprocessable_entity
+        end
+      end
+
       private
 
       def column
@@ -49,7 +71,7 @@ module Api
       end
 
       def card_params
-        params.require(:card).permit(:name, :description, :status)
+        params.require(:card).permit(:name, :description, :status, :user_id)
       end
     end
   end

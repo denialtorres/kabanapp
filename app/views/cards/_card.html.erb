@@ -1,12 +1,25 @@
-<%= turbo_frame_tag dom_id(card) do %>
-  <div class="card my-3 border-0 shadow-sm" data-kanban-board-target="card" data-board-id=<%= board.id %> data-column-id=<%= column.id %>  data-card-id=<%= card.id %>>
-      <div class="card-body">
-          <h5 class="card-title">
-              <%= card.name %>
-          </h5>
-          <p class="card-text">
-              <%= card.description %>
-          </p>
-      </div>
-  </div>
-<% end %>
+<div class="card my-3 border-0 shadow-sm" data-kanban-board-target="card" data-board-id=<%= board.id %> data-column-id=<%= column.id %> data-card-id=<%= card.id %>>
+    <div class="card-body">
+    <h5 class="card-title">
+        <%= card.name %>
+    </h5>
+    <p class="card-text">
+        <%= card.description %>
+    </p>
+
+    <!-- Assigned Users Section -->
+    <div class="assigned-users mt-2">
+        <strong>Assigned Users:</strong>
+        <ul class="list-unstyled">
+        <% card.users.each do |user| %>
+            <li>
+            <%= user.email %>
+            <% if user_card = card.user_cards.find_by(user: user) %>
+                (<%= user_card.role.capitalize %>)
+            <% end %>
+            </li>
+        <% end %>
+        </ul>
+    </div>
+    </div>
+</div>

@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :boards do
         resources :cards, only: [ :create, :update ]
+        post "cards/:id/assign", to: "cards#assign"
+        post "cards/:id/unassign", to: "cards#unassign"
       end
     end
   end
