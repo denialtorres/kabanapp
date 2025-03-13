@@ -31,9 +31,16 @@ RSpec.describe "PUT /api/v1/boards/:board_id/cards/:id", type: :request do
         let(:user) { create(:user) }
         let(:devise_api_token) { create(:devise_api_token, resource_owner: user) }
         let(:board) { create(:board, user: user) }
-        let(:card_record) { create(:card, column: board.columns.first) }
+        let!(:card_record) { create(:card, column: board.columns.first) }
         let(:board_id) { board.id }
         let(:id) { card_record.id }
+
+        before do
+          # bypass for now
+          Card.all.each do |card|
+            UserCard.create(card: card, user: user, role: "owner")
+          end
+        end
 
         let(:card) do
           {

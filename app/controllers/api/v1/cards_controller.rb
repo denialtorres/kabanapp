@@ -1,11 +1,6 @@
 module Api
   module V1
-    class CardsController < ApplicationController
-      # skip rails auth tokens
-      # fix for ActionController::InvalidAuthenticityToken (Can't verify CSRF token authenticity.):
-      skip_before_action :verify_authenticity_token, railse: false
-      before_action :authenticate_devise_api_token!
-      before_action :set_current_user
+    class CardsController < BaseController
       before_action :set_board, only: [ :create, :update ]
       before_action :set_card, only: [ :update ]
 
@@ -23,6 +18,8 @@ module Api
 
       # PUT /api/v1/boards/:board_id/cards/:id
       def update
+        authorize! dynamic_action, @card
+
         if @card.update(card_params.except(:status))
           @card.update(column: column) if card_params[:status].present?
 
@@ -39,13 +36,8 @@ module Api
         @board.columns.find_by(position: "to_do")
       end
 
-      def set_current_user
-        devise_api_token = current_devise_api_token
-        @current_user = devise_api_token.resource_owner
-      end
-
       def set_board
-        @board = current_user.boards.find(params[:board_id])
+        @board = Board.find(params[:board_id])
       rescue ActiveRecord::RecordNotFound
         render json: { error: "Board not found" }, status: :not_found
       end

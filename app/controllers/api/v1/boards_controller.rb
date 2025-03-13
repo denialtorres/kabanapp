@@ -1,11 +1,6 @@
 module Api
   module V1
-    class BoardsController < ApplicationController
-      # skip rails auth tokens
-      # fix for ActionController::InvalidAuthenticityToken (Can't verify CSRF token authenticity.):
-      skip_before_action :verify_authenticity_token, railse: false
-      before_action :authenticate_devise_api_token!
-      before_action :set_current_user
+    class BoardsController < BaseController
       before_action :set_board, only: [ :show, :update, :destroy ]
 
       # GET /api/v1/boards
@@ -49,11 +44,6 @@ module Api
       end
 
       private
-
-      def set_current_user
-        devise_api_token = current_devise_api_token
-        @current_user = devise_api_token.resource_owner
-      end
 
       def set_board
         @board = current_user.boards.find(params[:id])
