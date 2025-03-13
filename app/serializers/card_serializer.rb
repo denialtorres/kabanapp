@@ -9,4 +9,13 @@ class CardSerializer
   rescue
     ""
   end
+
+  attribute :assigned_users do |card|
+    card.user_cards.map do |user_card|
+      {
+        email: user_card.user.email,
+        role: user_card.role
+      }
+    end
+  end
 end

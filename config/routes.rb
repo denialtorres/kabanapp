@@ -5,6 +5,16 @@ Rails.application.routes.draw do
   get "pages/home"
   get "pages/restricted"
   devise_for :users
+  root "boards#index"
+
+  resources :boards do
+    # resources :columns do
+    #   resources :cards do
+    #     resource :move, only: :update, module: :cards
+    #   end
+    # end
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -15,7 +25,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :boards do
-        resources :cards, only: [ :create ]
+        resources :cards, only: [ :create, :update ]
+        post "cards/:id/assign", to: "cards#assign"
+        post "cards/:id/unassign", to: "cards#unassign"
       end
     end
   end

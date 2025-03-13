@@ -87,3 +87,7 @@ gem "devise-api", "~> 0.2.0"
 
 # serialize api response
 gem "jsonapi-serializer"
+
+# bootstrap
+gem "bootstrap"
+gem "sassc-rails"
