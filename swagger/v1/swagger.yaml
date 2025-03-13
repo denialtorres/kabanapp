@@ -414,15 +414,19 @@ paths:
               schema:
                 type: object
                 properties:
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  column_position:
-                    type: integer
-                require:
-                - name
-                - description
+                  card:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      status:
+                        type: string
+                        enum:
+                        - to_do
+                        - in_progress
+                        - done
           required: true
           description: Card main data
   "/api/v1/boards/{board_id}/cards/{id}":
@@ -456,12 +460,19 @@ paths:
               schema:
                 type: object
                 properties:
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  column_position:
-                    type: integer
+                  card:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      status:
+                        type: string
+                        enum:
+                        - to_do
+                        - in_progress
+                        - done
           required: true
           description: Updated card data
 servers:

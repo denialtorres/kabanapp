@@ -5,4 +5,8 @@ class Card < ApplicationRecord
   validates :description, presence: true
 
   default_scope { order(:position) }
+
+  def status
+    column.position
+  end
 end

@@ -15,9 +15,15 @@ RSpec.describe "PUT /api/v1/boards/:board_id/cards/:id", type: :request do
                 schema: {
                   type: :object,
                   properties: {
-                    name: { type: :string },
-                    description: { type: :string },
-                    column_position: { type: :integer }
+                    card: {
+                      type: :object,
+                      properties: {
+                        name: { type: :string },
+                        description: { type: :string },
+                        status: { type: :string, enum: [ "to_do", "in_progress", "done" ] }
+                      },
+                      required: [ "name", "description" ]
+                    }
                   }
                 }
 
@@ -29,7 +35,16 @@ RSpec.describe "PUT /api/v1/boards/:board_id/cards/:id", type: :request do
         let(:board_id) { board.id }
         let(:id) { card_record.id }
 
-        let(:card) { { name: "updated ticket", description: "this task is updated" } }
+        let(:card) do
+          {
+            card: {
+                    name: "updated ticket",
+                    description: "this task is updated",
+                    status: "in_progress"
+                  }
+          }
+        end
+
 
         let(:Authorization) { "Bearer #{devise_api_token.access_token}" }
 
@@ -46,6 +61,11 @@ RSpec.describe "PUT /api/v1/boards/:board_id/cards/:id", type: :request do
 
           expect(attributes["name"]).to eq("updated ticket")
           expect(attributes["description"]).to eq("this task is updated")
+          expect(attributes["column"]).to eq("in_progress")
+
+          card_record.reload
+
+          expect(card_record.status).to eq("in_progress")
         end
       end
 
