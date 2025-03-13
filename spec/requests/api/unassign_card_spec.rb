@@ -21,7 +21,7 @@ RSpec.describe "POST /api/v1/boards/:board_id/cards/:id/unassign", type: :reques
                       properties: {
                         user_id: :string
                       },
-                      required: [ "user_id"]
+                      required: [ "user_id" ]
                     }
                   }
                 }
@@ -49,7 +49,7 @@ RSpec.describe "POST /api/v1/boards/:board_id/cards/:id/unassign", type: :reques
         before do
           card_record.user_cards.create(user: regular_user, role: "user")
 
-          expect(card_record.user_cards.pluck(:user_id, :role)).to include([regular_user.id, "user"])
+          expect(card_record.user_cards.pluck(:user_id, :role)).to include([ regular_user.id, "user" ])
         end
 
 

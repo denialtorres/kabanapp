@@ -21,7 +21,7 @@ RSpec.describe "POST /api/v1/boards/:board_id/cards/:id/assign", type: :request 
                       properties: {
                         user_id: :string
                       },
-                      required: [ "user_id"]
+                      required: [ "user_id" ]
                     }
                   }
                 }
@@ -52,7 +52,7 @@ RSpec.describe "POST /api/v1/boards/:board_id/cards/:id/assign", type: :request 
           attributes = data["attributes"]
 
           expect(attributes).to include("assigned_users")
-          expect(attributes["assigned_users"]).to include({"email"=>regular_user.email, "role"=>"user"})
+          expect(attributes["assigned_users"]).to include({ "email"=>regular_user.email, "role"=>"user" })
         end
       end
     end

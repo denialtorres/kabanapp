@@ -15,7 +15,7 @@ RSpec.describe Column, type: :model do
     it "orders columns by position" do
       board = create(:board)
 
-      expect(board.columns.pluck(:position)).to eq(["to_do", "in_progress", "done"])
+      expect(board.columns.pluck(:position)).to eq([ "to_do", "in_progress", "done" ])
     end
   end
 end

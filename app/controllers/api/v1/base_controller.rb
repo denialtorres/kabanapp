@@ -12,7 +12,7 @@ module Api
       end
 
       def dynamic_action
-        if card_params.keys == ["status"]
+        if card_params.keys == [ "status" ]
           :move
         else
           :update
