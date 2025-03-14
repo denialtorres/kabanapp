@@ -8,7 +8,8 @@ RSpec.describe "PUT /api/v1/boards/:id", type: :request do
       consumes "application/json"
       produces "application/json"
 
-      let(:user) { create(:user) }
+      let(:user) { create(:user, role: "owner") }
+
       let(:devise_api_token) { create(:devise_api_token, resource_owner: user) }
 
       parameter name: :Authorization, in: :header, type: :string, required: true, description: "Bearer token"
@@ -58,6 +59,22 @@ RSpec.describe "PUT /api/v1/boards/:id", type: :request do
           expect(response).to have_http_status(:unprocessable_entity)
           body = JSON.parse(response.body)
           expect(body["error"]["name"]).to eq([ "can't be blank" ])
+        end
+      end
+
+      response "403", "Forbidden - Regular user cannot update the board" do
+        let(:regular_user) { create(:user) } # Default role should be "user"
+        let(:devise_api_token) { create(:devise_api_token, resource_owner: regular_user) }
+        let(:board) { { name: "Updated by regular user" } }
+
+        let(:id) { Board.last.id }
+
+        let(:Authorization) { "Bearer #{devise_api_token.access_token}" }
+
+        run_test! do
+          expect(response).to have_http_status(:forbidden)
+          body = JSON.parse(response.body)
+          expect(body["error"]).to eq("Access Denied")
         end
       end
     end

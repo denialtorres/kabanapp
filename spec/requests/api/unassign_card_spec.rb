@@ -19,7 +19,7 @@ RSpec.describe "POST /api/v1/boards/:board_id/cards/:id/unassign", type: :reques
                     card: {
                       type: :object,
                       properties: {
-                        user_id: :string
+                        user_id: { type: :string }
                       },
                       required: [ "user_id" ]
                     }
@@ -27,7 +27,7 @@ RSpec.describe "POST /api/v1/boards/:board_id/cards/:id/unassign", type: :reques
                 }
 
       response "200", "User Unassigned" do
-        let(:user) { create(:user) }
+        let(:user) { create(:user, role: "owner") }
         let(:regular_user) { create(:user) }
         let(:devise_api_token) { create(:devise_api_token, resource_owner: user) }
         let(:board) { create(:board, user: user) }
@@ -37,12 +37,11 @@ RSpec.describe "POST /api/v1/boards/:board_id/cards/:id/unassign", type: :reques
 
         let(:card) do
           {
-          card: {
-                  user_id: regular_user.id
-                }
+            card: {
+              user_id: regular_user.id
+            }
           }
         end
-
 
         let(:Authorization) { "Bearer #{devise_api_token.access_token}" }
 
@@ -51,7 +50,6 @@ RSpec.describe "POST /api/v1/boards/:board_id/cards/:id/unassign", type: :reques
 
           expect(card_record.user_cards.pluck(:user_id)).to include(regular_user.id)
         end
-
 
         run_test! do
           expect(response).to have_http_status(:ok)
@@ -62,6 +60,35 @@ RSpec.describe "POST /api/v1/boards/:board_id/cards/:id/unassign", type: :reques
           expect(attributes).to include("assigned_users")
           expect(attributes["assigned_users"]).to be_empty
           expect(card_record.user_cards.size).to be_zero
+        end
+      end
+
+      response "403", "Forbidden - Regular user cannot unassign" do
+        let(:regular_user) { create(:user) }
+        let(:devise_api_token) { create(:devise_api_token, resource_owner: regular_user) }
+        let(:board) { create(:board, user: create(:user, role: "owner")) } # Owner is a different user
+        let!(:card_record) { create(:card, column: board.columns.first) }
+        let(:board_id) { board.id }
+        let(:id) { card_record.id }
+
+        let(:card) do
+          {
+            card: {
+              user_id: regular_user.id
+            }
+          }
+        end
+
+        let(:Authorization) { "Bearer #{devise_api_token.access_token}" }
+
+        before do
+          card_record.user_cards.create(user: regular_user)
+        end
+
+        run_test! do
+          expect(response).to have_http_status(:forbidden)
+          body = JSON.parse(response.body)
+          expect(body["error"]).to eq("Access Denied")
         end
       end
     end

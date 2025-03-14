@@ -8,6 +8,8 @@ module Api
       def create
         @card = column.cards.new(card_params.except(:status))
 
+        authorize! :create, @card
+
         if @card.save
           @card.update(column: column) if card_params[:status].present?
           render json: CardSerializer.new(@card).serializable_hash.to_json, status: :created
@@ -31,6 +33,8 @@ module Api
 
       # POST /api/v1/boards/:board_id/cards/:id/assign
       def assign
+        authorize! :assign, @card
+
         assined_user = User.find(card_params[:user_id])
 
         if @card.user_cards.create(user: assined_user)
@@ -42,6 +46,8 @@ module Api
 
       # POST /api/v1/boards/:board_id/cards/:id/unassign
       def unassign
+        authorize! :unassign, @card
+
         assigned_card = @card.user_cards.where(user_id: card_params[:user_id])
 
         if assigned_card.destroy_all

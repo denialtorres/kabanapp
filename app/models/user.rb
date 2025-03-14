@@ -11,4 +11,8 @@ class User < ApplicationRecord
   ROLES = %w[super_admin owner user].freeze
 
   validates :role, inclusion: { in: ROLES }
+
+  def super_admin?
+    role == "super"
+  end
 end
