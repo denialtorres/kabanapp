@@ -15,7 +15,7 @@
             <li>
             <%= user.email %>
             <% if user_card = card.user_cards.find_by(user: user) %>
-                (<%= user_card.role.capitalize %>)
+                (<%= user_card.user.role.capitalize %>)
             <% end %>
             </li>
         <% end %>

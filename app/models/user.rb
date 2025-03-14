@@ -8,11 +8,19 @@ class User < ApplicationRecord
   has_many :user_cards
   has_many :cards, through: :user_cards
 
+  before_validation :set_default_time_zone, on: :create
+
   ROLES = %w[super_admin owner user].freeze
 
   validates :role, inclusion: { in: ROLES }
 
   def super_admin?
-    role == "super"
+    role == "super_admin"
+  end
+
+  private
+
+  def set_default_time_zone
+    self.preferred_time_zone ||= "Central Time (US & Canada)"
   end
 end

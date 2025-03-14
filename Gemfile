@@ -97,3 +97,9 @@ gem "sassc-rails"
 
 # user roles
 gem "cancancan"
+
+# background jobs
+gem "sidekiq", "~> 7.3"
+
+# cronjobs in redis/sidekiq
+gem "sidekiq-cron"

@@ -2,23 +2,17 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => "/api-docs"
   mount Rswag::Api::Engine => "/api-docs"
 
-  get "pages/home"
-  get "pages/restricted"
-  devise_for :users
-  root "boards#index"
-
-  resources :boards do
-    # resources :columns do
-    #   resources :cards do
-    #     resource :move, only: :update, module: :cards
-    #   end
-    # end
+  authenticate :user, ->(user) { user.super_admin? } do
+    mount Sidekiq::Web => "/sidekiq"
+    resources :boards, only: [ :index, :show ]
   end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get "pages/home"
+  root "pages#home"
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  devise_for :users
+
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   # main kaban endpoints

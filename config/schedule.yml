@@ -1,0 +1,4 @@
+send_deadlines:
+  cron: "0 * * * *" # Execute at the start of every hour
+  class: "SendDeadlinesNotification"
+  queue: critical

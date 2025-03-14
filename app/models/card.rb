@@ -5,8 +5,7 @@ class Card < ApplicationRecord
 
   validates :name, presence: true
   validates :description, presence: true
-
-  default_scope { order(:position) }
+  validates :deadline_at, presence: true
 
   def status
     column.position

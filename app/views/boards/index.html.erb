@@ -14,11 +14,8 @@
         <td><%= board.name %></td>
 
         <td><%= link_to "Show", board_path(board) %></td>
-        <td><%= link_to "Edit", edit_board_path(board) %></td>
+        <td></td>
         <td>
-          <%= link_to "Delete", board_path(board),
-            "data-turbo-method": :delete,
-            "data-turbo-confirm": "Are you sure?" %>
         </td>
       </tr>
     <% end %>
