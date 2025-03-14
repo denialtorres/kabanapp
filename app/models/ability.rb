@@ -5,11 +5,11 @@ class Ability
     return unless user.present?
 
     case user.role
-    when 'super_admin'
+    when "super_admin"
       super_admin_abilities
-    when 'owner'
+    when "owner"
       owner_abilities(user)
-    when 'user'
+    when "user"
       user_abilities(user)
     end
 
@@ -24,9 +24,9 @@ class Ability
 
   def owner_abilities(user)
     # owners can manage cards as long as they are the creators of the board
-    can [:create, :update, :assign, :move, :unassign], Card, column: { board: { user_id: user.id } }
+    can [ :create, :update, :assign, :move, :unassign ], Card, column: { board: { user_id: user.id } }
 
-    can [:create, :update], Board
+    can [ :create, :update ], Board
     # board authors and super admins can delete boards
     can :destroy, Board, user_id: user.id
   end
