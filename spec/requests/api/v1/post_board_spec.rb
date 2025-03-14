@@ -9,7 +9,7 @@ RSpec.describe "POST /api/v1/boards", type: :request do
       produces "application/json"
 
       parameter name: :Authorization, in: :header, type: :string, required: true, description: "Bearer token"
-      parameter name: :board, in: :body, require: true, description: "Board main data", schema: {
+      parameter name: :board, in: :body, required: true, description: "Board main data", schema: {
         type: :object,
         properties: {
           name: { type: :string }
@@ -18,7 +18,7 @@ RSpec.describe "POST /api/v1/boards", type: :request do
       }
 
       response "201", "Board created" do
-        let(:user) { create(:user) }
+        let(:user) { create(:user, role: "owner") }
         let(:devise_api_token) { create(:devise_api_token, resource_owner: user) }
         let(:board) { { name: "test name" } }
 
@@ -43,7 +43,7 @@ RSpec.describe "POST /api/v1/boards", type: :request do
       end
 
       response "422", "Missing params" do
-        let(:user) { create(:user) }
+        let(:user) { create(:user, role: "owner") }
         let(:devise_api_token) { create(:devise_api_token, resource_owner: user) }
         let(:board) { { name: "" } }
 
@@ -53,6 +53,20 @@ RSpec.describe "POST /api/v1/boards", type: :request do
           expect(response).to have_http_status(:unprocessable_entity)
           body = JSON.parse(response.body)
           expect(body["error"]["name"]).to eq([ "can't be blank" ])
+        end
+      end
+
+      response "403", "Forbidden - Regular user cannot create a board" do
+        let(:regular_user) { create(:user) }
+        let(:devise_api_token) { create(:devise_api_token, resource_owner: regular_user) }
+        let(:board) { { name: "Unauthorized board" } }
+
+        let(:Authorization) { "Bearer #{devise_api_token.access_token}" }
+
+        run_test! do
+          expect(response).to have_http_status(:forbidden)
+          body = JSON.parse(response.body)
+          expect(body["error"]).to eq("Access Denied")
         end
       end
     end

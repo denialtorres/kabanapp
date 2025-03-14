@@ -7,4 +7,12 @@ class User < ApplicationRecord
   has_many :boards, dependent: :destroy
   has_many :user_cards
   has_many :cards, through: :user_cards
+
+  ROLES = %w[super_admin owner user].freeze
+
+  validates :role, inclusion: { in: ROLES }
+
+  def super_admin?
+    role == "super"
+  end
 end

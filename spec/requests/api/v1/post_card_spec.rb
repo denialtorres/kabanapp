@@ -27,7 +27,8 @@ RSpec.describe "POST /api/v1/boards/:id/cards", type: :request do
                 }
 
       response "201", "Card Created" do
-        let(:user) { create(:user) }
+        let(:user) { create(:user, role: "owner") }
+
         let(:devise_api_token) { create(:devise_api_token, resource_owner: user) }
         let(:board) { create(:board, user: user) }
         let(:board_id) { board.id }
