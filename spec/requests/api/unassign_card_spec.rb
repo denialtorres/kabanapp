@@ -47,9 +47,9 @@ RSpec.describe "POST /api/v1/boards/:board_id/cards/:id/unassign", type: :reques
         let(:Authorization) { "Bearer #{devise_api_token.access_token}" }
 
         before do
-          card_record.user_cards.create(user: regular_user, role: "user")
+          card_record.user_cards.create(user: regular_user)
 
-          expect(card_record.user_cards.pluck(:user_id, :role)).to include([ regular_user.id, "user" ])
+          expect(card_record.user_cards.pluck(:user_id)).to include(regular_user.id)
         end
 
 

@@ -33,7 +33,7 @@ module Api
       def assign
         assined_user = User.find(card_params[:user_id])
 
-        if @card.user_cards.create(user: assined_user, role: "user")
+        if @card.user_cards.create(user: assined_user)
           render json: CardSerializer.new(@card).serializable_hash.to_json, status: :ok
         else
           render json: @card.errors, status: :unprocessable_entity

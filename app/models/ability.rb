@@ -13,10 +13,15 @@ class Ability
 
     can :read, Board
     can :read, Card
-    # Owners can manage cards they own
-    can [ :create, :update, :assign, :move ], Card, user_cards: { user_id: user.id, role: "owner" }
 
-    # Regular users can only move cards they are assigned to
-    can :move, Card, user_cards: { user_id: user.id, role: "user" }
+    # Owners can manage cards aslong they are the creators of the board
+    if user.role == "owner"
+      can [:create, :update, :assign, :move], Card, column: { board: { user_id: user.id } }
+    end
+
+    if user.role == "user"
+      # Regular users can only move cards they are assigned to
+      can :move, Card, user_cards: { user_id: user.id }
+    end
   end
 end

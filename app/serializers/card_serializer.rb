@@ -14,7 +14,7 @@ class CardSerializer
     card.user_cards.map do |user_card|
       {
         email: user_card.user.email,
-        role: user_card.role
+        role:  user_card.user.role
       }
     end
   end
