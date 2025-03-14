@@ -7,12 +7,10 @@ class Ability
     if user.super_admin?
       can :manage, :all
     else
+      # anyone can see the boards and the cards
       can :read, Board
       can :read, Card
     end
-
-    can :read, Board
-    can :read, Card
 
     # Owners can manage cards aslong they are the creators of the board
     if user.role == "owner"

@@ -5,12 +5,15 @@ module Api
 
       # GET /api/v1/boards
       def index
-        boards = current_user.boards.all
+        boards = Board.accessible_by(current_ability)
+
         render json: BoardSerializer.new(boards).serializable_hash.to_json
       end
 
       # GET /api/v1/boards/:id
       def show
+        authorize! :read, @board
+
         render json: BoardSerializer.new(@board).serializable_hash.to_json
       end
 
