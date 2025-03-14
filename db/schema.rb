@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_14_001840) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_14_193047) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,11 +24,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_001840) do
 
   create_table "cards", force: :cascade do |t|
     t.bigint "column_id", null: false
-    t.integer "position"
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "deadline_at"
     t.index ["column_id"], name: "index_cards_on_column_id"
   end
 
@@ -75,6 +75,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_001840) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role", default: "user", null: false
+    t.string "preferred_time_zone"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

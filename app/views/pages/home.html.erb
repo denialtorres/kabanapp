@@ -1,2 +1,27 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container d-flex flex-column align-items-center justify-content-center vh-100">
+  <h1 class="text-center text-black mb-4">Main KabanApp View</h1>
+
+  <div class="w-100 text-center mb-2">
+    <%= link_to "Admin", user_signed_in? ? boards_path : new_user_session_path, class: "btn custom-btn w-50" %>
+  </div>
+  <div class="w-100 text-center mb-2">
+    <%= link_to "Sidekiq", "/sidekiq", class: "btn custom-btn w-50" %>
+  </div>
+  <div class="w-100 text-center">
+    <%= link_to "API Docs", "/api-docs", class: "btn custom-btn w-50" %>
+  </div>
+</div>
+
+<style>
+  .custom-btn {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 0;
+  }
+
+  .custom-btn:hover {
+    background-color: black;
+    color: white;
+  }
+</style>

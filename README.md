@@ -81,3 +81,13 @@ inside the container
 ```
 rails rswag:specs:swaggerize RAILS_ENV=test
 ```
+
+
+peding stuff
+
+delete card endpoint
+github stuff
+
+pagination, filtering and sorting options
+
+

@@ -56,7 +56,7 @@ RSpec.describe "PUT /api/v1/boards/:board_id/cards/:id", type: :request do
             expect(data["type"]).to eq("card")
 
             attributes = data["attributes"]
-            expect(attributes).to include("id", "name", "description", "created_at", "updated_at", "position", "column")
+            expect(attributes).to include("id", "name", "description", "created_at", "updated_at", "column")
 
             expect(attributes["name"]).to eq("updated ticket")
             expect(attributes["description"]).to eq("this task is updated")

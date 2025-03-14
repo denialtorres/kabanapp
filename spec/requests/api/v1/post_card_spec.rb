@@ -52,7 +52,7 @@ RSpec.describe "POST /api/v1/boards/:id/cards", type: :request do
           expect(data["type"]).to eq("card")
 
           attributes = data["attributes"]
-          expect(attributes).to include("id", "name", "description", "created_at", "updated_at", "position", "column")
+          expect(attributes).to include("id", "name", "description", "created_at", "updated_at", "column")
 
 
           expect(attributes["name"]).to eq("first ticket")

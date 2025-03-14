@@ -2,7 +2,7 @@ class CardSerializer
   include JSONAPI::Serializer
 
   attributes :id, :name, :description, :created_at,
-             :updated_at, :position
+             :updated_at
 
   attribute :column do |card|
     card.column.name.parameterize.underscore

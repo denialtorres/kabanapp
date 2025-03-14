@@ -3,7 +3,7 @@ class BoardsController < ApplicationController
 
   # GET /boards or /boards.json
   def index
-    @boards = User.first.boards.all
+    @boards = Board.all
   end
 
   # GET /boards/1 or /boards/1.json
@@ -60,7 +60,7 @@ class BoardsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_board
-      @board = User.first.boards.find(params[:id])
+      @board = Board.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
