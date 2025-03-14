@@ -91,3 +91,6 @@ gem "jsonapi-serializer"
 # bootstrap
 gem "bootstrap"
 gem "sassc-rails"
+
+# user roles
+gem "cancancan"

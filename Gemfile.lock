@@ -93,6 +93,7 @@ GEM
     brakeman (7.0.0)
       racc
     builder (3.3.0)
+    cancancan (3.6.1)
     capybara (3.40.0)
       addressable
       matrix
@@ -496,6 +497,7 @@ DEPENDENCIES
   bootsnap
   bootstrap
   brakeman
+  cancancan
   capybara
   database_cleaner-active_record
   debug
