@@ -57,6 +57,13 @@ module Api
         end
       end
 
+      # GET /api/v1/cards/my_cards
+      def my_cards
+        @cards = current_user.cards
+
+        render json: CardSerializer.new(@cards).serializable_hash.to_json, status: :ok
+      end
+
       private
 
       def column
