@@ -61,7 +61,13 @@ module Api
       def my_cards
         @cards = current_user.cards
 
-        render json: CardSerializer.new(@cards).serializable_hash.to_json, status: :ok
+        page = if params[:page_token].present?
+                 Rotulus::Page.new(@cards, limit: 10).at(params[:page_token])
+        else
+                 Rotulus::Page.new(@cards, limit: 10)
+        end
+
+        render json: PaginatedCardsSerializer.new(page).serializable_hash
       end
 
       private

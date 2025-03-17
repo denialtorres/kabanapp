@@ -103,3 +103,9 @@ gem "sidekiq", "~> 7.3"
 
 # cronjobs in redis/sidekiq
 gem "sidekiq-cron"
+
+# cursor pagination
+gem "rotulus"
+
+# env variables
+gem "dotenv"
