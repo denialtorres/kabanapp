@@ -115,3 +115,11 @@ gem "interactor"
 
 # for queries
 gem "ransack"
+
+# to make external calls
+gem "httparty"
+
+# for cache
+gem "redis", "~> 5.3.0"
+gem "redis-client", "~> 0.23.0"
+gem "fastentry"
