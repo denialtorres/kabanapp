@@ -59,27 +59,13 @@ module Api
 
       # GET /api/v1/cards/my_cards
       def my_cards
-        # first interactor find/retrieve the cards
-        @cards = if params[:query].blank?
-                  current_user.cards.eager_load(:column)
+        payload = MyCardsOrganizer.call(user: current_user, params: params)
+
+        if payload.success?
+          render json: PaginatedCardsSerializer.new(payload.page).serializable_hash
         else
-                  search_params = { name_cont_any: params[:query], description_cont_any: params[:query], m: "or" }
-                  current_user.cards.eager_load(:column).ransack(search_params).result
+          render json: { error: result.error }, status: :unprocessable_entity
         end
-
-        # second interactor build the sort params
-        order_by = sort_index[params[:order_by]]
-
-
-        # third interactor retrieve and paginate
-        page = if params[:page_token].present?
-                 Rotulus::Page.new(@cards, order: order_by, limit: 10).at(params[:page_token])
-        else
-                 Rotulus::Page.new(@cards, order: order_by, limit: 10)
-        end
-
-
-        render json: PaginatedCardsSerializer.new(page).serializable_hash
       end
 
 

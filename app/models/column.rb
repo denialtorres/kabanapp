@@ -8,4 +8,8 @@ class Column < ApplicationRecord
   validates :position, presence: true
 
   default_scope { order(:position) }
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["position"]
+  end
 end

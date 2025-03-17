@@ -581,6 +581,14 @@ paths:
           schema:
             type: string
             example: "my task"
+        - name: status
+          in: query
+          description: filter the cards by status
+          required: false
+          schema:
+            type: string
+            enum: [to_do, in_progress, done]
+            example: "to_do"
       responses:
         '200':
           description: Successfully retrieved assigned cards
