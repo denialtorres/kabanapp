@@ -574,6 +574,13 @@ paths:
           schema:
             type: string
             example: "eyI6ZiI6eyJibyI6..."
+        - name: query
+          in: query
+          description: Query string to filter by description or ticket name
+          required: false
+          schema:
+            type: string
+            example: "my task"
       responses:
         '200':
           description: Successfully retrieved assigned cards
