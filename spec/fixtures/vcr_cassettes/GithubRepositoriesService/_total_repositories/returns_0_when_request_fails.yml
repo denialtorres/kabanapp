@@ -1,0 +1,76 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/users/denialtorres?client_id=Ov23liY4LqxO6huPFlv3&client_secret=ff0b04c4d70c2d58d19738b74a866f5bcd9d3459&per_page=30
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - custom-app
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 17 Mar 2025 23:24:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Vary:
+      - Accept,Accept-Encoding, Accept, X-Requested-With
+      Etag:
+      - W/"4cee39b8ffe4449c637e03e5c60e8a0fae1dbfef33737e378e1f2d45b2e39b12"
+      Last-Modified:
+      - Thu, 06 Mar 2025 18:41:19 GMT
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Github-Api-Version-Selected:
+      - '2022-11-28'
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '15'
+      X-Ratelimit-Reset:
+      - '1742256181'
+      X-Ratelimit-Used:
+      - '45'
+      X-Ratelimit-Resource:
+      - core
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO,
+        X-GitHub-Request-Id, Deprecation, Sunset
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Frame-Options:
+      - deny
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - '0'
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Content-Security-Policy:
+      - default-src 'none'
+      Transfer-Encoding:
+      - chunked
+      X-Github-Request-Id:
+      - D0E3:29EB73:386D719:7168AB5:67D8AF32
+      Server:
+      - github.com
+    body:
+      encoding: ASCII-8BIT
+      string: '{"login":"denialtorres","id":12284596,"node_id":"MDQ6VXNlcjEyMjg0NTk2","avatar_url":"https://avatars.githubusercontent.com/u/12284596?v=4","gravatar_id":"","url":"https://api.github.com/users/denialtorres","html_url":"https://github.com/denialtorres","followers_url":"https://api.github.com/users/denialtorres/followers","following_url":"https://api.github.com/users/denialtorres/following{/other_user}","gists_url":"https://api.github.com/users/denialtorres/gists{/gist_id}","starred_url":"https://api.github.com/users/denialtorres/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/denialtorres/subscriptions","organizations_url":"https://api.github.com/users/denialtorres/orgs","repos_url":"https://api.github.com/users/denialtorres/repos","events_url":"https://api.github.com/users/denialtorres/events{/privacy}","received_events_url":"https://api.github.com/users/denialtorres/received_events","type":"User","user_view_type":"public","site_admin":false,"name":null,"company":"@BetterTheWorld","blog":"","location":"Guadalajara","email":null,"hireable":null,"bio":null,"twitter_username":null,"public_repos":124,"public_gists":2,"followers":9,"following":10,"created_at":"2015-05-07T00:21:48Z","updated_at":"2025-03-06T18:41:19Z"}'
+  recorded_at: Mon, 17 Mar 2025 23:24:34 GMT
+recorded_with: VCR 6.3.1

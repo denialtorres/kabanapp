@@ -81,13 +81,22 @@ inside the container
 ```
 rails rswag:specs:swaggerize RAILS_ENV=test
 ```
+## enable cache
+```
+  rails dev:cache
+```
 
+to verify
+```ruby
+  Rails.cache
+  =>  <ActiveSupport::Cache::RedisCacheStore options={:namespace=>nil, :compress=>true, :compress_threshold=>1024, :expires_in=>nil, :race_condition_ttl=>nil} redis={:url=>"redis://redis:6379/1"}>
+```
 
-peding stuff
+to access to the UI
+```
+  http://localhost:3000/fastentry
+```
 
-github stuff
-
-filtering
 
 
 ## Create multiple cards

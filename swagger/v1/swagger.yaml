@@ -676,6 +676,57 @@ paths:
                   error:
                     type: string
                     example: "Unauthorized"
+  "/api/v1/repositories/summary":
+    get:
+      summary: Fetch summary of a GitHub user's repositories
+      tags:
+        - Repositories
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: username
+          in: query
+          required: true
+          schema:
+            type: string
+          description: GitHub username whose repository summary needs to be fetched
+      responses:
+        '200':
+          description: Successfully retrieved repository summary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_repositories:
+                    type: integer
+                    example: 42
+                  repositories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: "awesome-repo"
+                        stars:
+                          type: integer
+                          example: 120
+                        forks:
+                          type: integer
+                          example: 15
+                        watchers:
+                          type: integer
+                          example: 50
+                        open_issues:
+                          type: integer
+                          example: 2
+        '400':
+          description: Missing or invalid username parameter
+        '401':
+          description: Unauthorized - Invalid or missing token
+        '500':
+          description: Internal server error
 servers:
   - url: http://{defaultHost}
     variables:

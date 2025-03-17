@@ -2,3 +2,7 @@ send_deadlines:
   cron: "0 * * * *" # Execute at the start of every hour
   class: "SendDeadlinesNotification"
   queue: critical
+sync_repos:
+  cron: "0 3 * * *" # Execute everyday at 3am UTC"
+  class: "SyncRepos"
+  queue: "critical"

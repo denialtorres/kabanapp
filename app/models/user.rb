@@ -12,6 +12,8 @@ class User < ApplicationRecord
 
   ROLES = %w[super_admin owner user].freeze
 
+  GITHUB_USERS = %w[denialtorres esnilara asccigcc abdul-hamid-achik mperham]
+
   validates :role, inclusion: { in: ROLES }
 
   def super_admin?
