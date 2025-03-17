@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   # main kaban endpoints
   namespace :api do
     namespace :v1 do
+       get "cards/my_cards", to: "cards#my_cards"
+
       resources :boards do
         resources :cards, only: [ :create, :update ]
         post "cards/:id/assign", to: "cards#assign"

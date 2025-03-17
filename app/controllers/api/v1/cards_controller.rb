@@ -57,6 +57,18 @@ module Api
         end
       end
 
+      # GET /api/v1/cards/my_cards
+      def my_cards
+        payload = MyCardsOrganizer.call(user: current_user, params: params)
+
+        if payload.success?
+          render json: PaginatedCardsSerializer.new(payload.page).serializable_hash
+        else
+          render json: { error: result.error }, status: :unprocessable_entity
+        end
+      end
+
+
       private
 
       def column
@@ -78,6 +90,29 @@ module Api
 
       def card_params
         params.require(:card).permit(:name, :description, :status, :user_id)
+      end
+
+      def sort_index
+        {
+          "status_desc" => {
+            "columns.position" => {
+              direction: :desc,
+              model: Column
+            }
+          },
+          "status_asc" => {
+            "columns.position" => {
+              direction: :asc,
+              model: Column
+            }
+          },
+          "deadline_asc" => {
+            deadline_at: :asc
+          },
+          "deadline_desc" => {
+            deadline_at: :desc
+          }
+        }
       end
     end
   end

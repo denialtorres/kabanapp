@@ -11,4 +11,12 @@ class Card < ApplicationRecord
   def status
     column.position
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    [ "name", "description" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ "column" ]
+  end
 end

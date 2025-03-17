@@ -85,9 +85,28 @@ rails rswag:specs:swaggerize RAILS_ENV=test
 
 peding stuff
 
-delete card endpoint
 github stuff
 
-pagination, filtering and sorting options
+filtering
 
 
+## Create multiple cards
+
+```ruby
+  board = Board.last
+  developer = User.where(role: "user").last
+  columns = board.column_ids
+
+  50.times do
+    card = Card.create!(
+      column_id: columns.sample,
+      name: "Task ##{rand(1000..9999)}",
+      description: "This is a generated task",
+      created_at: Time.current,
+      updated_at: Time.current,
+      deadline_at: Date.new(2025, 3, 15) + rand(1..30).days # Random future dat
+    )
+
+    UserCard.create!(user_id: developer.id, card_id: card.id)
+  end
+```

@@ -551,6 +551,131 @@ paths:
                   - user_id
         required: true
         description: Updated card data
+  "/api/v1/cards/my_cards":
+    get:
+      summary: Retrieves the authenticated user's assigned cards
+      tags:
+        - Cards
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: order_by
+          in: query
+          description: Sort the results by column position
+          required: false
+          schema:
+            type: string
+            enum: [status_desc, status_asc, deadline_asc, deadline_desc]
+            example: status_desc
+        - name: page_token
+          in: query
+          description: Token for pagination (retrieved from previous response)
+          required: false
+          schema:
+            type: string
+            example: "eyI6ZiI6eyJibyI6..."
+        - name: query
+          in: query
+          description: Query string to filter by description or ticket name
+          required: false
+          schema:
+            type: string
+            example: "my task"
+        - name: status
+          in: query
+          description: filter the cards by status
+          required: false
+          schema:
+            type: string
+            enum: [to_do, in_progress, done]
+            example: "to_do"
+      responses:
+        '200':
+          description: Successfully retrieved assigned cards
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "paginated_cards"
+                      type:
+                        type: string
+                        example: "paginated_cards"
+                      attributes:
+                        type: object
+                        properties:
+                          page_info:
+                            type: object
+                            properties:
+                              page_records:
+                                type: integer
+                                example: 10
+                              total_records:
+                                type: integer
+                                example: 50
+                              next_page_token:
+                                type: string
+                                nullable: true
+                                example: "eyJmIjp7ImNhcmRzLmlkIjoyN30sImQiOiJuZXh0IiwiYyI6..."
+                              previous_page_token:
+                                type: string
+                                nullable: true
+                                example: null
+                          cards:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 30
+                                name:
+                                  type: string
+                                  example: "Task #3579"
+                                description:
+                                  type: string
+                                  example: "This is a generated task"
+                                created_at:
+                                  type: string
+                                  format: date-time
+                                  example: "2025-03-17T01:51:04.460Z"
+                                updated_at:
+                                  type: string
+                                  format: date-time
+                                  example: "2025-03-17T01:51:04.460Z"
+                                deadline_at:
+                                  type: string
+                                  format: date
+                                  example: "2025-03-16"
+                                column:
+                                  type: string
+                                  example: "done"
+                                assigned_users:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      email:
+                                        type: string
+                                        example: "developer@example.com"
+                                      role:
+                                        type: string
+                                        example: "user"
+        '401':
+          description: Invalid token - unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Unauthorized"
 servers:
   - url: http://{defaultHost}
     variables:
