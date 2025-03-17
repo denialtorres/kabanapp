@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
        get "cards/my_cards", to: "cards#my_cards"
+       get "repositories/summary", to: "repositories#summary"
 
       resources :boards do
         resources :cards, only: [ :create, :update ]
