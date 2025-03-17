@@ -6,9 +6,9 @@ class FindCards
 
     context.cards = if context.query.blank?
                       context.filtered_cards
-                    else
+    else
                       context.filtered_cards.ransack(search_params).result
-                    end
+    end
   end
 
   private

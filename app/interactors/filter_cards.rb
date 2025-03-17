@@ -7,15 +7,15 @@ class FilterCards
 
     context.filtered_cards = if context.status.blank?
                               user.cards.eager_load(:column)
-                            else
+    else
                               user.cards.eager_load(:column).ransack(status_filter).result
-                            end
+    end
   end
 
   private
 
   def status_filter
-    { column_position_eq: status_index[context.status]}
+    { column_position_eq: status_index[context.status] }
   end
 
   def status_index

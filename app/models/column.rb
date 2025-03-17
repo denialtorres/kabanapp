@@ -10,6 +10,6 @@ class Column < ApplicationRecord
   default_scope { order(:position) }
 
   def self.ransackable_attributes(auth_object = nil)
-    ["position"]
+    [ "position" ]
   end
 end

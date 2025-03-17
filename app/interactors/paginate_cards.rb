@@ -8,9 +8,9 @@ class PaginateCards
 
     page = if page_token.present?
              Rotulus::Page.new(cards, order: order_by, limit: 10).at(page_token)
-           else
+    else
              Rotulus::Page.new(cards, order: order_by, limit: 10)
-           end
+    end
 
     context.page = page
   end
