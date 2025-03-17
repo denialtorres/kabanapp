@@ -1,5 +1,5 @@
 # Main Schema
-![image](https://github.com/user-attachments/assets/13a891cd-d9f6-470b-bb57-7b5076a49946)
+![image](https://github.com/user-attachments/assets/1cee33b4-e82b-49ef-ae65-0ac4d9c77164)
 
 
 # AUTH API
@@ -15,6 +15,17 @@
 ```
 http://localhost:3000/api-docs/
 ```
+
+# Roles
+| Role         | Permissions                                                                 |
+|-------------|----------------------------------------------------------------------------|
+| **Super Admin** | Can **manage** everything (`:manage, :all`)                           |
+| **Owner**      | Can **create, update, assign, move, and unassign** cards on boards they own (`Card`) |
+|             | Can **create and update** boards (`Board`)                               |
+|             | Can **delete** boards they own (`Board`)                                |
+| **User**       | Can **move** cards they are assigned to (`Card`)                     |
+| **Public**     | Can **read** boards and cards (`Board`, `Card`)                      |
+
 
 ## Docker
 
