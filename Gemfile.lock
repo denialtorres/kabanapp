@@ -186,6 +186,7 @@ GEM
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
+    interactor (3.1.2)
     io-console (0.8.0)
     irb (1.15.1)
       pp (>= 0.6.0)
@@ -333,6 +334,10 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
+    ransack (4.3.0)
+      activerecord (>= 6.1.5)
+      activesupport (>= 6.1.5)
+      i18n
     rdoc (6.12.0)
       psych (>= 4.0.0)
     redis-client (0.24.0)
@@ -536,6 +541,7 @@ DEPENDENCIES
   dotenv
   factory_bot
   importmap-rails
+  interactor
   jbuilder
   jsonapi-serializer
   kamal
@@ -546,6 +552,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 8.0.1)
   rails-erd
+  ransack
   rotulus
   rspec-rails (~> 7.1)
   rswag-api

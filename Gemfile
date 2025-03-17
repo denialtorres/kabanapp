@@ -109,3 +109,9 @@ gem "rotulus"
 
 # env variables
 gem "dotenv"
+
+# interactor gem
+gem "interactor"
+
+# for queries
+gem "ransack"
