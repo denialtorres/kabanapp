@@ -41,6 +41,12 @@ RSpec.configure do |config|
     Rails.root.join('spec/fixtures')
   ]
 
+
+  VCR.configure do |config|
+    config.cassette_library_dir = 'spec/fixtures/vcr_cassettes/'
+    config.hook_into :webmock
+    config.configure_rspec_metadata!
+  end
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.

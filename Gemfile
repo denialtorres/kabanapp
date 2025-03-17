@@ -81,6 +81,10 @@ group :test do
   gem "rswag-specs"
   # clear database after each test
   gem "database_cleaner-active_record"
+
+  # for mock calls
+  gem "vcr"
+  gem "webmock"
 end
 
 gem "rspec-rails", "~> 7.1", groups: [ :development, :test ]

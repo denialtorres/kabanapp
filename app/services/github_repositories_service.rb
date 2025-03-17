@@ -1,19 +1,19 @@
-require 'httparty'
+require "httparty"
 
 class GithubRepositoriesService
   include HTTParty
-  base_uri 'https://api.github.com'
+  base_uri "https://api.github.com"
 
   def initialize(username)
     @username = username
     @options = {
       query: {
-        client_id: ENV['GITHUB_CLIENT_ID'],
-        client_secret: ENV['GITHUB_SECRET_ID'],
+        client_id: ENV["GITHUB_CLIENT_ID"],
+        client_secret: ENV["GITHUB_SECRET_ID"],
         per_page: 30
       },
       headers: {
-        'Accept' => 'application/vnd.github.v3+json',
+        "Accept" => "application/vnd.github.v3+json",
         "User-Agent" => "custom-app"
       }
     }
@@ -21,6 +21,7 @@ class GithubRepositoriesService
 
   def fetch_repositories(page: 1)
     response = self.class.get("/users/#{@username}/repos", query: @options[:query].merge(page: page))
+
     return [] unless response.success?
 
     response.parsed_response
@@ -47,7 +48,7 @@ class GithubRepositoriesService
       }
     end
 
-    return { total_repositories: cached_data.size, repositories: stats }
+    { total_repositories: cached_data.size, repositories: stats }
   end
 
   def fetch_all_repositories
