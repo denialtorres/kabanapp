@@ -553,19 +553,27 @@ paths:
         description: Updated card data
   "/api/v1/cards/my_cards":
     get:
-      summary: Retrieves the authenticated user's assigned cards with pagination
+      summary: Retrieves the authenticated user's assigned cards
       tags:
         - Cards
       security:
         - bearerAuth: []
       parameters:
-        - name: page_token
+        - name: order_by
           in: query
-          description: Token for fetching the next or previous page of results
+          description: Sort the results by column position
           required: false
           schema:
             type: string
-            example: "eyJmIjp7ImNhcmRzLmlkIjoyN30sImQiOi..."
+            enum: [status_desc, status_asc, deadline_asc, deadline_desc]
+            example: status_desc
+        - name: page_token
+          in: query
+          description: Token for pagination (retrieved from previous response)
+          required: false
+          schema:
+            type: string
+            example: "eyI6ZiI6eyJibyI6..."
       responses:
         '200':
           description: Successfully retrieved assigned cards
@@ -579,7 +587,7 @@ paths:
                     properties:
                       id:
                         type: string
-                        example: null
+                        example: "paginated_cards"
                       type:
                         type: string
                         example: "paginated_cards"
@@ -598,7 +606,7 @@ paths:
                               next_page_token:
                                 type: string
                                 nullable: true
-                                example: "eyJmIjp7ImNhcmRzLmlkIjoyN30sImQiOi..."
+                                example: "eyJmIjp7ImNhcmRzLmlkIjoyN30sImQiOiJuZXh0IiwiYyI6..."
                               previous_page_token:
                                 type: string
                                 nullable: true
@@ -610,27 +618,39 @@ paths:
                               properties:
                                 id:
                                   type: integer
-                                  example: 12
+                                  example: 30
                                 name:
                                   type: string
-                                  example: "Implement API docs"
+                                  example: "Task #3579"
                                 description:
                                   type: string
-                                  example: "Add OpenAPI documentation for the API"
-                                status:
-                                  type: string
-                                  example: "in_progress"
-                                board_id:
-                                  type: integer
-                                  example: 3
+                                  example: "This is a generated task"
                                 created_at:
                                   type: string
                                   format: date-time
-                                  example: "2025-03-16T12:34:56.789Z"
+                                  example: "2025-03-17T01:51:04.460Z"
                                 updated_at:
                                   type: string
                                   format: date-time
-                                  example: "2025-03-16T12:34:56.789Z"
+                                  example: "2025-03-17T01:51:04.460Z"
+                                deadline_at:
+                                  type: string
+                                  format: date
+                                  example: "2025-03-16"
+                                column:
+                                  type: string
+                                  example: "done"
+                                assigned_users:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      email:
+                                        type: string
+                                        example: "developer@example.com"
+                                      role:
+                                        type: string
+                                        example: "user"
         '401':
           description: Invalid token - unauthorized
           content:
@@ -641,67 +661,6 @@ paths:
                   error:
                     type: string
                     example: "Unauthorized"
-      get:
-        summary: Retrieves the authenticated user's assigned cards
-        tags:
-          - Cards
-        security:
-          - bearerAuth: []
-        responses:
-          '200':
-            description: Successfully retrieved assigned cards
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                            example: "12"
-                          type:
-                            type: string
-                            example: "card"
-                          attributes:
-                            type: object
-                            properties:
-                              id:
-                                type: integer
-                                example: 12
-                              name:
-                                type: string
-                                example: "Implement API docs"
-                              description:
-                                type: string
-                                example: "Add OpenAPI documentation for the API"
-                              status:
-                                type: string
-                                example: "in_progress"
-                              board_id:
-                                type: integer
-                                example: 3
-                              created_at:
-                                type: string
-                                format: date-time
-                                example: "2025-03-16T12:34:56.789Z"
-                              updated_at:
-                                type: string
-                                format: date-time
-                                example: "2025-03-16T12:34:56.789Z"
-          '401':
-            description: Invalid token - unauthorized
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    error:
-                      type: string
-                      example: "Unauthorized"
 servers:
   - url: http://{defaultHost}
     variables:

@@ -59,16 +59,19 @@ module Api
 
       # GET /api/v1/cards/my_cards
       def my_cards
-        @cards = current_user.cards
+        @cards = current_user.cards.eager_load(:column)
+
+        order_by = sort_index[params[:order_by]]
 
         page = if params[:page_token].present?
-                 Rotulus::Page.new(@cards, limit: 10).at(params[:page_token])
+                 Rotulus::Page.new(@cards, order: order_by, limit: 10).at(params[:page_token])
         else
-                 Rotulus::Page.new(@cards, limit: 10)
+                 Rotulus::Page.new(@cards, order: order_by, limit: 10)
         end
 
         render json: PaginatedCardsSerializer.new(page).serializable_hash
       end
+
 
       private
 
@@ -91,6 +94,29 @@ module Api
 
       def card_params
         params.require(:card).permit(:name, :description, :status, :user_id)
+      end
+
+      def sort_index
+        {
+          "status_desc" => {
+            "columns.position" => {
+              direction: :desc,
+              model: Column
+            }
+          },
+          "status_asc" => {
+            "columns.position" => {
+              direction: :asc,
+              model: Column
+            }
+          },
+          "deadline_asc" => {
+            deadline_at: :asc
+          },
+          "deadline_desc" => {
+            deadline_at: :desc
+          }
+        }
       end
     end
   end
