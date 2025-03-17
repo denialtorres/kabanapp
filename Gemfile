@@ -99,7 +99,7 @@ gem "sassc-rails"
 gem "cancancan"
 
 # background jobs
-gem "sidekiq", "~> 7.3"
+gem "sidekiq", "~> 8.0"
 
 # cronjobs in redis/sidekiq
 gem "sidekiq-cron"
