@@ -12,7 +12,7 @@
               </div>
               <div class="card-body">
                 <%= turbo_frame_tag dom_id(column, "cards") do %>
-                    <% column.cards.order(position: :asc).each do |card| %>
+                    <% column.cards.order(created_at: :desc).each do |card| %>
                         <%= render partial: "cards/card", locals: { board: board, column: column, card: card } %>
                     <% end %>
                 <% end %>
