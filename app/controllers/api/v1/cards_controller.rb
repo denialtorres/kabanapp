@@ -91,29 +91,6 @@ module Api
       def card_params
         params.require(:card).permit(:name, :description, :status, :user_id)
       end
-
-      def sort_index
-        {
-          "status_desc" => {
-            "columns.position" => {
-              direction: :desc,
-              model: Column
-            }
-          },
-          "status_asc" => {
-            "columns.position" => {
-              direction: :asc,
-              model: Column
-            }
-          },
-          "deadline_asc" => {
-            deadline_at: :asc
-          },
-          "deadline_desc" => {
-            deadline_at: :desc
-          }
-        }
-      end
     end
   end
 end
