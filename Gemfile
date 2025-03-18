@@ -124,6 +124,6 @@ gem "ransack"
 gem "httparty"
 
 # for cache
-gem "redis", "~> 5.3.0"
+gem "redis", "~> 5.4.0"
 gem "redis-client", "~> 0.23.0"
 gem "fastentry"
