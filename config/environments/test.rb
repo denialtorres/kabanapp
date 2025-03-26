@@ -28,6 +28,9 @@ Rails.application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 
+  # needed for the rate limiter
+  config.cache_store = :memory_store, { size: 64.megabytes }
+
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test
 

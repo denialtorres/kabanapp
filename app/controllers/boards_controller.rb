@@ -23,6 +23,8 @@ class BoardsController < ApplicationController
   def create
     @board = current_user.boards.new(board_params)
 
+    authorize! :create, @board
+
     respond_to do |format|
       if @board.save
         format.html { redirect_to board_url(@board), notice: "Board was successfully created." }
@@ -36,6 +38,8 @@ class BoardsController < ApplicationController
 
   # PATCH/PUT /boards/1 or /boards/1.json
   def update
+    authorize! :update, @board
+
     respond_to do |format|
       if @board.update(board_params)
         format.html { redirect_to board_url(@board), notice: "Board was successfully updated." }
@@ -49,6 +53,8 @@ class BoardsController < ApplicationController
 
   # DELETE /boards/1 or /boards/1.json
   def destroy
+    authorize! :destroy, @board
+
     @board.destroy!
 
     respond_to do |format|
