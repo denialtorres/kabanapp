@@ -11,6 +11,8 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'database_cleaner/active_record'
 
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -40,7 +42,6 @@ RSpec.configure do |config|
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
   ]
-
 
   VCR.configure do |config|
     config.cassette_library_dir = 'spec/fixtures/vcr_cassettes/'

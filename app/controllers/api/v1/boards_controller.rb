@@ -1,6 +1,8 @@
 module Api
   module V1
     class BoardsController < BaseController
+      rate_limit to: 5, within: 1.hour, by: -> { request.domain }, only: [ :index ]
+
       before_action :set_board, only: [ :show, :update, :destroy ]
 
       # GET /api/v1/boards
