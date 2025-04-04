@@ -16,10 +16,10 @@ class FilterAndFindCards
         {
           m: "or",
           name_cont_any: params[:query].presence,
-          description_cont_any: params[:query].presence,
+          description_cont_any: params[:query].presence
         }
       ],
-      column_position_eq:status_index[params[:status]].presence,
+      column_position_eq: status_index[params[:status]].presence
     }.compact
   end
 
