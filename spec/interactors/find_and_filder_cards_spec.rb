@@ -33,7 +33,7 @@ RSpec.describe FilterAndFindCards, type: :interactor do
 
       it 'returns all user cards' do
         expect(context).to be_success
-        expect(context.cards).to match_array([card1, card2, card3])
+        expect(context.cards).to match_array([ card1, card2, card3 ])
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe FilterAndFindCards, type: :interactor do
 
       it 'returns matching cards' do
         expect(context).to be_success
-        expect(context.cards).to match_array([card1, card2, card3])
+        expect(context.cards).to match_array([ card1, card2, card3 ])
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe FilterAndFindCards, type: :interactor do
 
       it 'returns all cards since status is ignored' do
         expect(context).to be_success
-        expect(context.cards).to match_array([card1, card2, card3])
+        expect(context.cards).to match_array([ card1, card2, card3 ])
       end
     end
 
