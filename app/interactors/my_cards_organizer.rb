@@ -1,8 +1,7 @@
 class MyCardsOrganizer
   include Interactor::Organizer
 
-  organize FilterCards,
-           FindCards,
+  organize FilterAndFindCards,
            SortCards,
            PaginateCards
 end
