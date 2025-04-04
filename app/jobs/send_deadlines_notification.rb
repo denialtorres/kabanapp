@@ -2,13 +2,17 @@ class SendDeadlinesNotification < ApplicationJob
   queue_as :critical
 
   def perform
+    # find the time zones list for an specific hour
+    # in what places is it 9pm for example
+    # =>  ["Central Time (US & Canada)", "Bogota", "Lima", "Quito"]
     time_zones = find_time_zones_for_daily_digest
 
     return if time_zones.empty?
 
     puts "DAILY DIGEST FOR TIMEZONES: #{time_zones}"
 
-
+    # select any time zone from the list since its basically the same
+    # and the the current date without worry about the minutes
     current_date= ActiveSupport::TimeZone[time_zones.first].now.beginning_of_hour.to_date
 
     # for testing
