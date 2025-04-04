@@ -3,6 +3,8 @@ class FilterAndFindCards
 
   def call
     context.cards = user.cards.eager_load(:column).ransack(serach_params).result
+  rescue StandardError => e
+    context.fail!(message: e.message, error_code: :internal)
   end
 
   private
@@ -19,7 +21,7 @@ class FilterAndFindCards
           description_cont_any: params[:query].presence
         }
       ],
-      column_position_eq: status_index[params[:status]].presence
+      column_position_eq: status_index[params["status"]].presence
     }.compact
   end
 
