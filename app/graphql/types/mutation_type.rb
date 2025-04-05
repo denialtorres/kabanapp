@@ -9,5 +9,6 @@ module Types
     field :update_card, mutation: Mutations::Cards::Update
     field :remove_card, mutation: Mutations::Cards::Remove
     field :assign_card, mutation: Mutations::Cards::Assign
+    field :unassign_card, mutation: Mutations::Cards::Unassign
   end
 end
