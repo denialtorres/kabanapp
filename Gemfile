@@ -129,4 +129,4 @@ gem "redis-client", "~> 0.23.0"
 gem "fastentry"
 
 gem "graphql", "~> 2.5"
-gem "graphiql-rails", group: :development
+gem "graphiql-rails"
