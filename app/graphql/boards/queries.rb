@@ -7,7 +7,7 @@ module Boards
     end
 
     def boards
-      Board.all
+      context[:current_user]&.boards
     end
   end
 end
