@@ -1,0 +1,44 @@
+type Board {
+  cards: [Card!]!
+  id: ID!
+  name: String!
+}
+
+type Card {
+  """
+  Users assigned to this card
+  """
+  assignees: [User!]!
+  description: String!
+  id: ID!
+  name: String!
+}
+
+type Mutation {
+  """
+  An example field added by the generator
+  """
+  testField: String!
+}
+
+type Query {
+  """
+  Fetch a specific board by its ID, belonging to the current user.
+  """
+  board(
+    """
+    The unique identifier of the board.
+    """
+    id: ID!
+  ): Board!
+
+  """
+  Retrieve a list of all boards that belong to the current user.
+  """
+  boards: [Board!]!
+}
+
+type User {
+  email: String!
+  id: ID!
+}

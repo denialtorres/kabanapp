@@ -6,8 +6,9 @@ class GraphqlController < ApplicationController
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
 
-  before_action :authenticate_devise_api_token!
-  before_action :set_current_user
+  before_action :authenticate_devise_api_token!, unless: :graphiql_request?
+  before_action :set_current_user, unless: :graphiql_request?
+
 
   def execute
     variables = prepare_variables(params[:variables])
@@ -55,5 +56,9 @@ class GraphqlController < ApplicationController
   def set_current_user
     devise_api_token = current_devise_api_token
     @current_user = devise_api_token.resource_owner
+  end
+
+  def graphiql_request?
+    params[:operationName] == "IntrospectionQuery"
   end
 end
