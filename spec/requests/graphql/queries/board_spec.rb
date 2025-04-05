@@ -12,8 +12,7 @@ RSpec.describe "Graphql, board query", type: :request do
     cards.each { |card| create(:user_card, user: user, card: card) }
   end
 
-
-  it "retrieves an specific board" do
+  it "retrieves a specific board" do
     query = <<~QUERY
       query ($id: ID!) {
         board(id: $id) {
@@ -27,70 +26,29 @@ RSpec.describe "Graphql, board query", type: :request do
                      query: query,
                      variables: { id: board.id }
                     },
-                     headers:  {
-                      Authorization: "Bearer #{devise_api_token.access_token}"
-                    }
+                     headers: {
+                       Authorization: "Bearer #{devise_api_token.access_token}"
+                     }
 
     expect(response.parsed_body).not_to have_errors
-    expect(response.parsed_body["data"]).to eq(
-      "board" =>
-        {
-          "id" => board.id&.to_s,
-          "name" => board.name
-        }
-    )
-  end
-
-  it "retrieves an specific board with cards" do
-    query = <<~QUERY
-      query ($id: ID!) {
-        board(id: $id) {
-          id
-          name
-          cards {
-            name
-            description
-          }
-        }
-      }
-    QUERY
-
-    post "/graphql", params: {
-                     query: query,
-                     variables: { id: board.id }
-                    },
-                     headers:  {
-                      Authorization: "Bearer #{devise_api_token.access_token}"
-                    }
-
-    expect(response.parsed_body).not_to have_errors
-
     expect(response.parsed_body["data"]).to eq(
       "board" => {
         "id" => board.id.to_s,
-        "name" => board.name,
-        "cards" => cards.map do |card|
-          {
-            "name" => card.name,
-            "description" => card.description
-          }
-        end
+        "name" => board.name
       }
     )
   end
 
-  it "retrieves a specific board with cards and their assignees" do
+  it "retrieves a specific board with cards" do
     query = <<~QUERY
       query ($id: ID!) {
         board(id: $id) {
           id
           name
           cards {
-            name
-            description
-            assignees {
-              id
-              email
+            nodes {
+              name
+              description
             }
           }
         }
@@ -102,8 +60,8 @@ RSpec.describe "Graphql, board query", type: :request do
                      variables: { id: board.id }
                     },
                      headers: {
-                      Authorization: "Bearer #{devise_api_token.access_token}"
-                    }
+                       Authorization: "Bearer #{devise_api_token.access_token}"
+                     }
 
     expect(response.parsed_body).not_to have_errors
 
@@ -111,19 +69,120 @@ RSpec.describe "Graphql, board query", type: :request do
       "board" => {
         "id" => board.id.to_s,
         "name" => board.name,
-        "cards" => cards.map do |card|
-          {
-            "name" => card.name,
-            "description" => card.description,
-            "assignees" => [
+        "cards" => {
+          "nodes" => cards.first(10).map do |card|
               {
-                "id" => user.id.to_s,
-                "email" => user.email
+                "name" => card.name,
+                "description" => card.description
               }
-            ]
-          }
-        end
+          end
+        }
       }
     )
+  end
+
+  it "retrieves a specific board with cards and their assignees" do
+    query = <<~QUERY
+      query ($id: ID!) {
+        board(id: $id) {
+          id
+          name
+          cards {
+            nodes {
+              name
+              description
+              assignees {
+                id
+                email
+              }
+            }
+          }
+        }
+      }
+    QUERY
+
+    post "/graphql", params: {
+                     query: query,
+                     variables: { id: board.id }
+                    },
+                     headers: {
+                       Authorization: "Bearer #{devise_api_token.access_token}"
+                     }
+
+    expect(response.parsed_body).not_to have_errors
+
+    expect(response.parsed_body["data"]).to eq(
+      "board" => {
+        "id" => board.id.to_s,
+        "name" => board.name,
+        "cards" => {
+          "nodes" => cards.first(10).map do |card|
+            {
+              "name" => card.name,
+              "description" => card.description,
+              "assignees" => [
+                {
+                  "id" => user.id.to_s,
+                  "email" => user.email
+                }
+              ]
+            }
+          end
+        }
+      }
+    )
+  end
+
+  it "retrieves a single board, with two pages of cards" do
+    query = <<~QUERY
+      query ($id: ID!, $after: String) {
+        board(id: $id) {
+          id
+          name
+          cards(after: $after) {
+            nodes {
+              name
+              description
+            }
+            pageInfo {
+              endCursor
+            }
+          }
+        }
+      }
+    QUERY
+
+    post "/graphql", params: {
+      query: query,
+      variables: { id: board.id }
+     },
+      headers: {
+        Authorization: "Bearer #{devise_api_token.access_token}"
+      }
+
+    expect(response.parsed_body).not_to have_errors
+    expect(response.parsed_body["data"]).to match(
+        "board" => a_hash_including(
+          "name" => board.name,
+      )
+    )
+
+    expect(response.parsed_body.dig("data", "board", "cards", "nodes").count).to eq(10)
+
+    end_cursor = response.parsed_body.dig("data", "board", "cards", "pageInfo", "endCursor")
+
+    post "/graphql", params: { query: query, variables: { id: board.id, after: end_cursor } },
+    headers: {
+      Authorization: "Bearer #{devise_api_token.access_token}"
+    }
+
+    expect(response.parsed_body).not_to have_errors
+    expect(response.parsed_body["data"]).to match(
+      "board" => a_hash_including(
+        "name" => board.name,
+      )
+    )
+
+    expect(response.parsed_body.dig("data", "board", "cards", "nodes").count).to eq(5)
   end
 end
