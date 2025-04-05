@@ -6,5 +6,6 @@ module Types
 
     # for cards
     field :add_card, mutation: Mutations::Cards::Add
+    field :update_card, mutation: Mutations::Cards::Update
   end
 end
