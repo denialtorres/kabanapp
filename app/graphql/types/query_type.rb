@@ -2,6 +2,9 @@
 
 module Types
   class QueryType < Types::BaseObject
+    include Boards::Queries
+    include Cards::Queries
+
     field :node, Types::NodeType, null: true, description: "Fetches an object given its ID." do
       argument :id, ID, required: true, description: "ID of the object."
     end
@@ -20,10 +23,5 @@ module Types
 
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
-
-    field :boards, [ BoardType ], null: false
-    def boards
-      Board.all
-    end
   end
 end

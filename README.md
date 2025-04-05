@@ -108,6 +108,41 @@ to access to the UI
   http://localhost:3000/fastentry
 ```
 
+## GraphQL
+
+in the headers section
+```ruby
+  {
+    "authorization": "Bearer Bfq48nJyv4EURepZV8NRJsqxzSxtdg6wPZwKmgfrSEYKNqz4TKiRcwnGmiZx"
+  }
+```
+
+Update schema
+```
+  rake graphql:schema:dump
+```
+
+
+Query for pagination
+
+```ruby
+	query ($id: ID!){
+		board(id: $id){
+			id
+			name
+			cards {
+				nodes {
+				 name
+				 description
+        }
+        pageInfo{
+         hasNextPage
+				 endCursor
+        }
+			}
+		}
+  }
+```
 
 
 ## Create multiple cards
