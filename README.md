@@ -126,22 +126,22 @@ Update schema
 Query for pagination
 
 ```ruby
-	query ($id: ID!){
-		board(id: $id){
-			id
-			name
-			cards {
-				nodes {
-				 name
-				 description
-        }
-        pageInfo{
-         hasNextPage
-				 endCursor
-        }
-			}
-		}
+query ($id: ID!) {
+  board(id: $id) {
+    id
+    name
+    cards {
+      nodes {
+        name
+        description
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
   }
+}
 ```
 
 
