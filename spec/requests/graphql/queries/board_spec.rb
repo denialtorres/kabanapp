@@ -8,6 +8,11 @@ RSpec.describe "Graphql, board query", type: :request do
     create_list(:card, 15, column: board.columns.first)
   end
 
+  before do
+    cards.each { |card| create(:user_card, user: user, card: card) }
+  end
+
+
   it "retrieves an specific board" do
     query = <<~QUERY
       query ($id: ID!) {
@@ -68,6 +73,54 @@ RSpec.describe "Graphql, board query", type: :request do
           {
             "name" => card.name,
             "description" => card.description
+          }
+        end
+      }
+    )
+  end
+
+  it "retrieves a specific board with cards and their assignees" do
+    query = <<~QUERY
+      query ($id: ID!) {
+        board(id: $id) {
+          id
+          name
+          cards {
+            name
+            description
+            assignees {
+              id
+              email
+            }
+          }
+        }
+      }
+    QUERY
+
+    post "/graphql", params: {
+                     query: query,
+                     variables: { id: board.id }
+                    },
+                     headers: {
+                      Authorization: "Bearer #{devise_api_token.access_token}"
+                    }
+
+    expect(response.parsed_body).not_to have_errors
+
+    expect(response.parsed_body["data"]).to eq(
+      "board" => {
+        "id" => board.id.to_s,
+        "name" => board.name,
+        "cards" => cards.map do |card|
+          {
+            "name" => card.name,
+            "description" => card.description,
+            "assignees" => [
+              {
+                "id" => user.id.to_s,
+                "email" => user.email
+              }
+            ]
           }
         end
       }
