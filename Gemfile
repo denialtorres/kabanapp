@@ -127,3 +127,6 @@ gem "httparty"
 gem "redis", "~> 5.3.0"
 gem "redis-client", "~> 0.23.0"
 gem "fastentry"
+
+gem "graphql", "~> 2.5"
+gem "graphiql-rails", group: :development

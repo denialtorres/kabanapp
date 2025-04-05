@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  post "/graphql", to: "graphql#execute"
+
   mount Rswag::Ui::Engine => "/api-docs"
   mount Rswag::Api::Engine => "/api-docs"
 
   authenticate :user, ->(user) { user.super_admin? } do
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
     mount Sidekiq::Web => "/sidekiq"
     mount Fastentry::Engine, at: "/fastentry"
     resources :boards, only: [ :index, :show ]
