@@ -19,6 +19,7 @@ RSpec.describe "GraphQL, cards query", type: :request do
           nodes {
             name
             description
+            status
           }
           pageInfo{
             endCursor
@@ -38,7 +39,8 @@ RSpec.describe "GraphQL, cards query", type: :request do
       cards.first(10).map do |card|
         {
           "name" => card.name,
-          "description" => card.description
+          "description" => card.description,
+          "status" => card.status
         }
       end
     )
