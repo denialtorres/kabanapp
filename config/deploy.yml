@@ -46,8 +46,8 @@ env:
     - REDIS_PORT
     - REDIS_URL
   clear:
-    POSTGRES_DB: pdf_editor_production
-    DB_HOST: pdf_editor-postgres
+    POSTGRES_DB: kabanapp_production
+    DB_HOST: kabanapp_production-postgres
     DB_PORT: 5432
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
