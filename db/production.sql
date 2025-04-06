@@ -1,1 +1,2 @@
 CREATE DATABASE kabanapp_production
+CREATE DATABASE kabanapp_production_cable;
