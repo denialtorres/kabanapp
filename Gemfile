@@ -5,7 +5,7 @@ gem "rails", "~> 8.0.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgres as the database for Active Record
-gem "pg"
+gem "pg", "~> 1.1"
 
 # for test
 gem "sqlite3"
@@ -58,10 +58,6 @@ group :development, :test do
 
   # debuggin
   gem "pry"
-
-  # for api documentation
-  gem "rswag-api"
-  gem "rswag-ui"
 end
 
 group :development do
@@ -130,3 +126,7 @@ gem "fastentry"
 
 gem "graphql", "~> 2.5"
 gem "graphiql-rails"
+
+# for api documentation
+gem "rswag-api"
+gem "rswag-ui"

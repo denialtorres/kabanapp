@@ -1,0 +1,4 @@
+CREATE DATABASE kabanapp_production
+CREATE DATABASE kabanapp_production_cache;
+CREATE DATABASE kabanapp_production_queue;
+CREATE DATABASE kabanapp_production_cable;
