@@ -5,7 +5,7 @@ gem "rails", "~> 8.0.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgres as the database for Active Record
-gem "pg"
+gem "pg", "~> 1.1"
 
 # for test
 gem "sqlite3"
