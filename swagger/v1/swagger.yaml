@@ -6,7 +6,7 @@ info:
 components:
   securitySchemes:
     bearerAuth:
-      type: http
+      type: https
       scheme: bearer
       bearerFormat: JWT
 paths:
@@ -732,3 +732,4 @@ servers:
     variables:
       defaultHost:
         default: localhost:3000
+  - url: https://demoapp-daniel.fun
