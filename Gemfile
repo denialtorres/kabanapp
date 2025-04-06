@@ -58,10 +58,6 @@ group :development, :test do
 
   # debuggin
   gem "pry"
-
-  # for api documentation
-  gem "rswag-api"
-  gem "rswag-ui"
 end
 
 group :development do
@@ -130,3 +126,7 @@ gem "fastentry"
 
 gem "graphql", "~> 2.5"
 gem "graphiql-rails"
+
+# for api documentation
+gem "rswag-api"
+gem "rswag-ui"
