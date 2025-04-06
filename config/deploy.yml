@@ -47,7 +47,7 @@ env:
     POSTGRES_DB: kabanapp_production
     DB_HOST: kabanapp-postgres
     DB_PORT: 5432
-    REDIS_URL: redis://redis:6379/1
+    REDIS_URL: redis://kabanapp-redis:6379/1
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
     # SOLID_QUEUE_IN_PUMA: true
@@ -124,7 +124,6 @@ accessories:
   redis:
     image: redis:7.4
     host: 178.156.155.90
-    port: 6379
     directories:
       - data:/data
     options:
