@@ -9,6 +9,10 @@ class Column < ApplicationRecord
 
   default_scope { order(:position) }
 
+  scope :to_do, -> { where(position: :to_do).first }
+  scope :in_progress, -> { where(position: :in_progress).first }
+  scope :done, -> { where(position: :done).first }
+
   def self.ransackable_attributes(auth_object = nil)
     [ "position" ]
   end
