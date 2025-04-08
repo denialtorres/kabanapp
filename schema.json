@@ -459,6 +459,41 @@
         },
         {
           "kind": "ENUM",
+          "name": "CardOrder",
+          "description": "Possible orders for a card list",
+          "interfaces": null,
+          "possibleTypes": null,
+          "fields": null,
+          "inputFields": null,
+          "enumValues": [
+            {
+              "name": "STATUS_ASC",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "STATUS_DESC",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "DEADLINE_ASC",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "DEADLINE_DESC",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
           "name": "CardStatus",
           "description": "Possible statuses for a card",
           "interfaces": null,
@@ -948,6 +983,18 @@
                   "type": {
                     "kind": "ENUM",
                     "name": "CardStatus",
+                    "ofType": null
+                  },
+                  "defaultValue": null,
+                  "isDeprecated": false,
+                  "deprecationReason": null
+                },
+                {
+                  "name": "orderBy",
+                  "description": "Order results",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "CardOrder",
                     "ofType": null
                   },
                   "defaultValue": null,
