@@ -64,7 +64,7 @@ module Api
         if payload.success?
           render json: PaginatedCardsSerializer.new(payload.page).serializable_hash
         else
-          render json: { error: result.error }, status: :unprocessable_entity
+          render json: { error: payload.message }, status: :unprocessable_entity
         end
       end
 

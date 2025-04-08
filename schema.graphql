@@ -111,6 +111,16 @@ type CardEdge {
 }
 
 """
+Possible orders for a card list
+"""
+enum CardOrder {
+  DEADLINE_ASC
+  DEADLINE_DESC
+  STATUS_ASC
+  STATUS_DESC
+}
+
+"""
 Possible statuses for a card
 """
 enum CardStatus {
@@ -243,6 +253,21 @@ type Query {
     Returns the last _n_ elements from the list.
     """
     last: Int
+
+    """
+    Order results
+    """
+    orderBy: CardOrder
+
+    """
+    find specific cards by name or description
+    """
+    query: String
+
+    """
+    filter by status of the card to_do, in_progress, done
+    """
+    status: CardStatus
   ): CardConnection!
 }
 
